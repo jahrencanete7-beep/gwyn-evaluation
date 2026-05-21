@@ -1,0 +1,1537 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Good luck baby, I know kaya mo yan 🌷</title>
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;0,700;1,400;1,600&family=Jost:wght@300;400;500;600&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+    <style>
+        *, *::before, *::after {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+        :root {
+            --bg: #faf6f2;
+            --bg2: #f5ede5;
+            --surface: #ffffff;
+            --border: #e8ddd3;
+            --border2: #d9ccc0;
+            --text: #5c4033;
+            --text2: #8b6f47;
+            --text3: #a89968;
+            --ink: #3d2817;
+            --tulip: #c9714a;
+            --tulip-deep: #9d5a3a;
+            --tulip-light: #ffe8d9;
+            --tulip-border: #f5cbb8;
+            --stem: #7a9b6f;
+            --stem-light: #e8f4e0;
+            --stem-border: #b5d4aa;
+            --petal-warm: #d4a574;
+            --petal-soft: #fdf2e8;
+            --r: 16px;
+            --r-sm: 10px;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: 'Jost', sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            min-height: 100vh;
+            padding: 0 0 6rem;
+            position: relative;
+            overflow-x: hidden;
+        }
+
+        body::before {
+            content: '';
+            position: fixed;
+            inset: 0;
+            background: radial-gradient(ellipse 70% 55% at 5% 5%, rgba(201,113,74,0.08) 0%, transparent 55%),
+                        radial-gradient(ellipse 55% 45% at 95% 85%, rgba(212,165,116,0.12) 0%, transparent 55%),
+                        radial-gradient(ellipse 40% 40% at 80% 10%, rgba(212,165,116,0.07) 0%, transparent 50%);
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        .tulip-bg {
+            position: fixed;
+            pointer-events: none;
+            z-index: 0;
+            opacity: 0.06;
+        }
+        .tulip-bg-1 { top: -40px; right: -30px; width: 260px; transform: rotate(15deg); }
+        .tulip-bg-2 { bottom: 60px; left: -50px; width: 200px; transform: rotate(-10deg) scaleX(-1); }
+
+        .wrap {
+            max-width: 680px;
+            margin: 0 auto;
+            padding: 0 1.25rem;
+            position: relative;
+            z-index: 1;
+        }
+
+        header {
+            padding: 3.5rem 0 2rem;
+            text-align: center;
+            position: relative;
+        }
+
+        .tulip-crown {
+            display: flex;
+            justify-content: center;
+            gap: 8px;
+            margin-bottom: 1rem;
+            animation: petalDrop .7s ease both;
+        }
+        .tulip-crown svg { width: 32px; height: 42px; }
+
+        .header-eyebrow {
+            font-family: 'DM Mono', monospace;
+            font-size: 0.62rem;
+            letter-spacing: 0.2em;
+            text-transform: uppercase;
+            color: var(--text3);
+            margin-bottom: 0.75rem;
+            animation: fadeUp .5s .1s ease both;
+        }
+        header h1 {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: clamp(1.9rem, 5.5vw, 2.7rem);
+            font-weight: 600;
+            letter-spacing: -0.01em;
+            color: var(--ink);
+            line-height: 1.2;
+            margin-bottom: 0.5rem;
+            animation: fadeUp .5s .15s ease both;
+        }
+        header h1 em { font-style: italic; color: var(--tulip); }
+        .header-sub {
+            font-size: 0.82rem;
+            color: var(--text2);
+            animation: fadeUp .5s .2s ease both;
+        }
+        header::after {
+            content: '✦ 🌷 ✦';
+            display: block;
+            margin: 1.25rem auto 0;
+            font-size: 0.85rem;
+            color: var(--petal-warm);
+            letter-spacing: 0.4em;
+            animation: fadeUp .5s .25s ease both;
+        }
+
+        .stats-row {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 8px;
+            margin-bottom: 1.25rem;
+            animation: fadeUp .5s .3s ease both;
+        }
+        .stat-card {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: var(--r-sm);
+            padding: 0.7rem 0.5rem;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+        .stat-card::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; right: 0;
+            height: 3px;
+            background: linear-gradient(90deg, var(--petal-warm), var(--tulip));
+            opacity: 0.6;
+        }
+        .stat-label {
+            font-family: 'DM Mono', monospace;
+            font-size: 0.58rem;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            color: var(--text3);
+            margin-bottom: 4px;
+        }
+        .stat-val {
+            font-size: 1.25rem;
+            font-weight: 600;
+            font-family: 'Cormorant Garamond', serif;
+        }
+        .sv-green { color: var(--stem); }
+        .sv-rose { color: var(--tulip); }
+        .sv-amber { color: var(--text2); }
+        .sv-blue { color: #7a6b4a; }
+
+        .prog-wrap {
+            margin-bottom: 1.5rem;
+            animation: fadeUp .5s .35s ease both;
+        }
+        .prog-meta {
+            display: flex;
+            justify-content: space-between;
+            font-size: 0.73rem;
+            color: var(--text2);
+            margin-bottom: 7px;
+            font-family: 'DM Mono', monospace;
+        }
+        .prog-bar {
+            height: 6px;
+            background: var(--bg2);
+            border-radius: 99px;
+            overflow: hidden;
+            position: relative;
+        }
+        .prog-fill {
+            height: 100%;
+            background: linear-gradient(90deg, var(--petal-warm), var(--tulip), var(--tulip-deep));
+            border-radius: 99px;
+            transition: width .5s cubic-bezier(.4,0,.2,1);
+            position: relative;
+        }
+        .prog-fill::after {
+            content: '🌷';
+            position: absolute;
+            right: -10px;
+            top: 50%;
+            transform: translateY(-50%);
+            font-size: 14px;
+            line-height: 1;
+        }
+
+        .q-card {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: var(--r);
+            padding: 2rem;
+            margin-bottom: 1rem;
+            animation: fadeUp .4s ease both;
+            box-shadow: 0 4px 24px rgba(201,113,74,0.07), 0 1px 4px rgba(201,113,74,0.04);
+            position: relative;
+            overflow: hidden;
+        }
+        .q-card::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; right: 0;
+            height: 4px;
+            background: linear-gradient(90deg, var(--petal-warm) 0%, var(--tulip) 50%, var(--petal-warm) 100%);
+        }
+        .q-card::after {
+            content: '🌷';
+            position: absolute;
+            bottom: 14px; right: 18px;
+            font-size: 1.4rem;
+            opacity: 0.12;
+            transform: rotate(20deg);
+            pointer-events: none;
+        }
+
+        .q-eyebrow {
+            font-family: 'DM Mono', monospace;
+            font-size: 0.6rem;
+            letter-spacing: 0.14em;
+            text-transform: uppercase;
+            color: var(--text3);
+            margin-bottom: 0.8rem;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+        .q-eyebrow::before { content: '🌷'; font-size: 0.7rem; opacity: 0.6; }
+
+        .q-text {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 1.18rem;
+            font-weight: 400;
+            line-height: 1.65;
+            color: var(--ink);
+            margin-bottom: 1.5rem;
+        }
+
+        .choices {
+            display: flex;
+            flex-direction: column;
+            gap: 9px;
+        }
+        .choice-btn {
+            background: var(--bg);
+            border: 1.5px solid var(--border);
+            border-radius: var(--r-sm);
+            padding: 0.85rem 1.1rem;
+            text-align: left;
+            font-family: 'Jost', sans-serif;
+            font-size: 0.875rem;
+            font-weight: 400;
+            color: var(--text);
+            cursor: pointer;
+            transition: background .15s, border-color .15s, transform .1s, box-shadow .15s;
+            display: flex;
+            align-items: flex-start;
+            gap: 10px;
+        }
+        .choice-btn:hover:not(:disabled) {
+            background: var(--petal-soft);
+            border-color: var(--petal-warm);
+            box-shadow: 0 2px 12px rgba(201,113,74,0.08);
+            transform: translateY(-1px);
+        }
+        .choice-btn:active:not(:disabled) { transform: scale(0.99); }
+        .choice-letter {
+            font-family: 'DM Mono', monospace;
+            font-size: 0.63rem;
+            color: var(--text3);
+            margin-top: 3px;
+            min-width: 14px;
+            flex-shrink: 0;
+        }
+        .choice-btn.correct {
+            background: var(--stem-light);
+            border-color: var(--stem-border);
+            color: var(--stem);
+            box-shadow: 0 2px 10px rgba(122,155,111,0.1);
+        }
+        .choice-btn.correct .choice-letter { color: var(--stem); }
+        .choice-btn.wrong {
+            background: var(--tulip-light);
+            border-color: var(--tulip-border);
+            color: var(--tulip-deep);
+        }
+        .choice-btn.wrong .choice-letter { color: var(--tulip-deep); }
+        .choice-btn.reveal-correct {
+            background: var(--stem-light);
+            border-color: var(--stem-border);
+            color: var(--stem);
+        }
+        .choice-btn.reveal-correct .choice-letter { color: var(--stem); }
+        .choice-btn:disabled { cursor: default; }
+
+        .input-answer {
+            width: 100%;
+            padding: 0.85rem 1.1rem;
+            border: 1.5px solid var(--border);
+            border-radius: var(--r-sm);
+            font-family: 'Jost', sans-serif;
+            font-size: 0.875rem;
+            background: var(--bg);
+            color: var(--text);
+            margin-bottom: 1rem;
+        }
+        .btn-submit-ans {
+            background: linear-gradient(135deg, var(--tulip), var(--tulip-deep));
+            color: #fff;
+            border: none;
+            border-radius: var(--r-sm);
+            padding: 0.7rem 1.2rem;
+            font-weight: 500;
+            cursor: pointer;
+            font-family: 'Jost', sans-serif;
+        }
+
+        .feedback-box {
+            margin-top: 1rem;
+            padding: 1rem 1.1rem;
+            border-radius: var(--r-sm);
+            font-size: 0.95rem;
+            line-height: 1.6;
+            display: none;
+            animation: fadeUp .25s ease;
+            font-weight: 500;
+            font-style: italic;
+        }
+        .feedback-correct {
+            background: var(--stem-light);
+            color: var(--stem);
+            border: 1.5px solid var(--stem-border);
+        }
+        .feedback-wrong {
+            background: var(--tulip-light);
+            color: var(--tulip-deep);
+            border: 1.5px solid var(--tulip-border);
+        }
+
+        .nav-row {
+            display: flex;
+            justify-content: flex-end;
+            margin-bottom: 1.5rem;
+        }
+        .btn-next {
+            display: none;
+            font-family: 'Jost', sans-serif;
+            font-size: 0.875rem;
+            font-weight: 600;
+            padding: 10px 26px;
+            background: linear-gradient(135deg, var(--tulip), var(--tulip-deep));
+            color: #fff;
+            border: none;
+            border-radius: 99px;
+            cursor: pointer;
+            transition: opacity .15s, transform .1s, box-shadow .15s;
+            letter-spacing: 0.03em;
+            box-shadow: 0 4px 16px rgba(201,113,74,0.3);
+        }
+        .btn-next:hover {
+            opacity: 0.9;
+            transform: translateY(-1px);
+            box-shadow: 0 6px 20px rgba(201,113,74,0.35);
+        }
+        .btn-next:active { transform: scale(0.97); }
+
+        .results-summary {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: var(--r);
+            padding: 2rem;
+            text-align: center;
+            box-shadow: 0 4px 24px rgba(201,113,74,0.07);
+            display: none;
+            animation: fadeUp .5s ease;
+        }
+        .results-summary.show { display: block; }
+        .results-summary h2 {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 1.8rem;
+            color: var(--ink);
+            margin-bottom: 1rem;
+        }
+        .results-summary p {
+            font-size: 0.95rem;
+            line-height: 1.6;
+            color: var(--text2);
+            margin-bottom: 1.5rem;
+        }
+        .results-summary .score-display {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 3rem;
+            font-weight: 700;
+            color: var(--tulip);
+            margin-bottom: 1rem;
+        }
+        .btn-restart {
+            background: linear-gradient(135deg, var(--stem), #6a8a60);
+            color: #fff;
+            border: none;
+            border-radius: var(--r-sm);
+            padding: 0.7rem 1.5rem;
+            font-weight: 600;
+            cursor: pointer;
+            font-family: 'Jost', sans-serif;
+        }
+
+        @keyframes fadeUp {
+            from { opacity: 0; transform: translateY(12px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        @keyframes petalDrop {
+            0% { opacity: 0; transform: translateY(-20px); }
+            100% { opacity: 1; transform: translateY(0); }
+        }
+
+        .hidden { display: none !important; }
+    </style>
+</head>
+<body>
+    <svg class="tulip-bg tulip-bg-1" viewBox="0 0 200 280" xmlns="http://www.w3.org/2000/svg">
+        <path d="M100 20 C110 40, 120 70, 115 100 C110 130, 100 160, 100 200 L100 200 C100 160, 90 130, 85 100 C80 70, 90 40, 100 20" fill="currentColor" opacity="0.3"/>
+        <ellipse cx="100" cy="220" rx="8" ry="40" fill="currentColor" opacity="0.2"/>
+    </svg>
+    <svg class="tulip-bg tulip-bg-2" viewBox="0 0 200 280" xmlns="http://www.w3.org/2000/svg">
+        <path d="M100 20 C110 40, 120 70, 115 100 C110 130, 100 160, 100 200 L100 200 C100 160, 90 130, 85 100 C80 70, 90 40, 100 20" fill="currentColor" opacity="0.3"/>
+        <ellipse cx="100" cy="220" rx="8" ry="40" fill="currentColor" opacity="0.2"/>
+    </svg>
+
+    <div class="wrap">
+        <header>
+            <div class="tulip-crown">
+                <svg viewBox="0 0 32 42" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M16 2 C16 2, 8 15, 8 22 C8 30, 12 38, 16 40 C20 38, 24 30, 24 22 C24 15, 16 2, 16 2" fill="#c9714a"/>
+                </svg>
+            </div>
+            <p class="header-eyebrow">Accounting Challenge</p>
+            <h1>Good luck baby,<br>I know <em>kaya mo yan</em> 🌷</h1>
+            <p class="header-sub">Master the accounting cycle with 100 challenging questions</p>
+        </header>
+
+        <div class="stats-row">
+            <div class="stat-card">
+                <div class="stat-label">Progress</div>
+                <div class="stat-val"><span id="q-done">0</span>/<span id="q-total">100</span></div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-label">Score</div>
+                <div class="stat-val sv-green"><span id="score">0</span>%</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-label">Correct</div>
+                <div class="stat-val sv-rose"><span id="correct">0</span></div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-label">Streak</div>
+                <div class="stat-val sv-amber"><span id="streak">0</span></div>
+            </div>
+        </div>
+
+        <div class="prog-wrap">
+            <div class="prog-meta">
+                <span>Quiz Progress</span>
+                <span id="prog-pct">0%</span>
+            </div>
+            <div class="prog-bar">
+                <div class="prog-fill" id="prog-fill" style="width: 0%"></div>
+            </div>
+        </div>
+
+        <div id="questions-container"></div>
+
+        <div class="results-summary" id="results">
+            <h2>✨ You Did It! ✨</h2>
+            <div class="score-display"><span id="final-score">0</span>%</div>
+            <p id="results-message">Thank you for pushing through all 100 questions. You're amazing!</p>
+            <button class="btn-restart" onclick="location.reload()">Try Again</button>
+        </div>
+    </div>
+
+    <script>
+        const questions = [
+            // Multiple Choice - Concepts (20 questions)
+            {
+                id: 1,
+                question: "Which accounting document records business transactions in chronological order?",
+                type: "multiple",
+                options: [
+                    { text: "General Ledger", value: "a" },
+                    { text: "Journal", value: "b" },
+                    { text: "Trial Balance", value: "c" },
+                    { text: "Statement of Financial Position", value: "d" }
+                ],
+                correct: "b",
+                points: 1
+            },
+            {
+                id: 2,
+                question: "What is the primary purpose of the General Ledger?",
+                type: "multiple",
+                options: [
+                    { text: "To record transactions chronologically", value: "a" },
+                    { text: "To summarize account balances by account type", value: "b" },
+                    { text: "To prepare financial statements", value: "c" },
+                    { text: "To audit company operations", value: "d" }
+                ],
+                correct: "b",
+                points: 1
+            },
+            {
+                id: 3,
+                question: "Which statement shows the financial position at a specific point in time?",
+                type: "multiple",
+                options: [
+                    { text: "Statement of Comprehensive Income", value: "a" },
+                    { text: "Statement of Cash Flows", value: "b" },
+                    { text: "Statement of Financial Position", value: "c" },
+                    { text: "Statement of Partner's Equity", value: "d" }
+                ],
+                correct: "c",
+                points: 1
+            },
+            {
+                id: 4,
+                question: "The Cash Receipts journal is used to record:",
+                type: "multiple",
+                options: [
+                    { text: "All cash outflows", value: "a" },
+                    { text: "All cash inflows", value: "b" },
+                    { text: "Credit sales only", value: "c" },
+                    { text: "Returns and allowances", value: "d" }
+                ],
+                correct: "b",
+                points: 1
+            },
+            {
+                id: 5,
+                question: "Which document is prepared before posting entries to the General Ledger?",
+                type: "multiple",
+                options: [
+                    { text: "Adjusted Trial Balance", value: "a" },
+                    { text: "Closing Trial Balance", value: "b" },
+                    { text: "Unadjusted Trial Balance", value: "c" },
+                    { text: "Post-Closing Trial Balance", value: "d" }
+                ],
+                correct: "c",
+                points: 1
+            },
+            {
+                id: 6,
+                question: "The Accounting Cycle typically consists of how many steps?",
+                type: "multiple",
+                options: [
+                    { text: "5 steps", value: "a" },
+                    { text: "8 steps", value: "b" },
+                    { text: "10 steps", value: "c" },
+                    { text: "12 steps", value: "d" }
+                ],
+                correct: "b",
+                points: 1
+            },
+            {
+                id: 7,
+                question: "What is the purpose of a Worksheet in accounting?",
+                type: "multiple",
+                options: [
+                    { text: "To replace the General Ledger", value: "a" },
+                    { text: "To summarize accounts before adjustments", value: "b" },
+                    { text: "To assist in preparation of financial statements", value: "c" },
+                    { text: "To record customer payments", value: "d" }
+                ],
+                correct: "c",
+                points: 1
+            },
+            {
+                id: 8,
+                question: "Which statement reports all revenues and expenses for a period?",
+                type: "multiple",
+                options: [
+                    { text: "Statement of Financial Position", value: "a" },
+                    { text: "Statement of Comprehensive Income", value: "b" },
+                    { text: "Statement of Cash Flows", value: "c" },
+                    { text: "Statement of Partner's Equity", value: "d" }
+                ],
+                correct: "b",
+                points: 1
+            },
+            {
+                id: 9,
+                question: "The Cash Disbursement journal records:",
+                type: "multiple",
+                options: [
+                    { text: "Credit purchases", value: "a" },
+                    { text: "All cash payments", value: "b" },
+                    { text: "Customer sales", value: "c" },
+                    { text: "Inventory adjustments", value: "d" }
+                ],
+                correct: "b",
+                points: 1
+            },
+            {
+                id: 10,
+                question: "What accounts appear in the Post-Closing Trial Balance?",
+                type: "multiple",
+                options: [
+                    { text: "All accounts including revenue and expenses", value: "a" },
+                    { text: "Only asset, liability, and owner's capital accounts", value: "b" },
+                    { text: "Only revenue and expense accounts", value: "c" },
+                    { text: "Only temporary accounts", value: "d" }
+                ],
+                correct: "b",
+                points: 1
+            },
+            {
+                id: 11,
+                question: "Which of the following is NOT a specialized journal?",
+                type: "multiple",
+                options: [
+                    { text: "Cash Receipts Journal", value: "a" },
+                    { text: "Cash Disbursement Journal", value: "b" },
+                    { text: "General Journal", value: "c" },
+                    { text: "Master Journal", value: "d" }
+                ],
+                correct: "d",
+                points: 1
+            },
+            {
+                id: 12,
+                question: "The Statement of Partner's Equity shows changes in:",
+                type: "multiple",
+                options: [
+                    { text: "Total assets only", value: "a" },
+                    { text: "Partners' capital accounts and drawings", value: "b" },
+                    { text: "Current liabilities only", value: "c" },
+                    { text: "Monthly revenue and expenses", value: "d" }
+                ],
+                correct: "b",
+                points: 1
+            },
+            {
+                id: 13,
+                question: "When closing temporary accounts, which account is NOT closed?",
+                type: "multiple",
+                options: [
+                    { text: "Sales Revenue", value: "a" },
+                    { text: "Operating Expenses", value: "b" },
+                    { text: "Accumulated Depreciation", value: "c" },
+                    { text: "Dividends", value: "d" }
+                ],
+                correct: "c",
+                points: 1
+            },
+            {
+                id: 14,
+                question: "Which trial balance includes adjusting entries but before closing entries?",
+                type: "multiple",
+                options: [
+                    { text: "Unadjusted Trial Balance", value: "a" },
+                    { text: "Adjusted Trial Balance", value: "b" },
+                    { text: "Closing Trial Balance", value: "c" },
+                    { text: "Post-Closing Trial Balance", value: "d" }
+                ],
+                correct: "b",
+                points: 1
+            },
+            {
+                id: 15,
+                question: "The Statement of Cash Flows shows the sources and uses of cash in which categories?",
+                type: "multiple",
+                options: [
+                    { text: "Operating and investing only", value: "a" },
+                    { text: "Operating, investing, and financing activities", value: "b" },
+                    { text: "Direct and indirect methods", value: "c" },
+                    { text: "Current and non-current activities", value: "d" }
+                ],
+                correct: "b",
+                points: 1
+            },
+            {
+                id: 16,
+                question: "Which journal would you use to record the payment of rent with cash?",
+                type: "multiple",
+                options: [
+                    { text: "General Journal", value: "a" },
+                    { text: "Cash Receipts Journal", value: "b" },
+                    { text: "Cash Disbursement Journal", value: "c" },
+                    { text: "Sales Journal", value: "d" }
+                ],
+                correct: "c",
+                points: 1
+            },
+            {
+                id: 17,
+                question: "Adjusting entries are typically made at:",
+                type: "multiple",
+                options: [
+                    { text: "The beginning of each month", value: "a" },
+                    { text: "Before financial statements are prepared", value: "b" },
+                    { text: "After closing entries are recorded", value: "c" },
+                    { text: "Every transaction date", value: "d" }
+                ],
+                correct: "b",
+                points: 1
+            },
+            {
+                id: 18,
+                question: "Which ledger provides detailed account information for a specific account?",
+                type: "multiple",
+                options: [
+                    { text: "General Ledger", value: "a" },
+                    { text: "Subsidiary Ledger", value: "b" },
+                    { text: "Control Ledger", value: "c" },
+                    { text: "Master Ledger", value: "d" }
+                ],
+                correct: "b",
+                points: 1
+            },
+            {
+                id: 19,
+                question: "What is the relationship between the Journal and the General Ledger?",
+                type: "multiple",
+                options: [
+                    { text: "They are the same document", value: "a" },
+                    { text: "Transactions are journalized first, then posted to the ledger", value: "b" },
+                    { text: "The ledger is prepared before journalizing", value: "c" },
+                    { text: "Both exist independently with no relationship", value: "d" }
+                ],
+                correct: "b",
+                points: 1
+            },
+            {
+                id: 20,
+                question: "Which account appears on BOTH the Adjusted Trial Balance and Post-Closing Trial Balance?",
+                type: "multiple",
+                options: [
+                    { text: "Sales Revenue", value: "a" },
+                    { text: "Service Expenses", value: "b" },
+                    { text: "Accumulated Depreciation", value: "c" },
+                    { text: "Income Summary", value: "d" }
+                ],
+                correct: "c",
+                points: 1
+            },
+
+            // True or False (40 questions)
+            {
+                id: 21,
+                question: "True or False: The General Journal is used exclusively for credit sales transactions.",
+                type: "truefalse",
+                correct: "false",
+                points: 1
+            },
+            {
+                id: 22,
+                question: "True or False: The Trial Balance proves the mathematical accuracy of the General Ledger.",
+                type: "truefalse",
+                correct: "true",
+                points: 1
+            },
+            {
+                id: 23,
+                question: "True or False: Adjusting entries are recorded after the final trial balance is prepared.",
+                type: "truefalse",
+                correct: "false",
+                points: 1
+            },
+            {
+                id: 24,
+                question: "True or False: Revenue accounts appear on the Statement of Financial Position.",
+                type: "truefalse",
+                correct: "false",
+                points: 1
+            },
+            {
+                id: 25,
+                question: "True or False: The Statement of Comprehensive Income includes operating and comprehensive income.",
+                type: "truefalse",
+                correct: "true",
+                points: 1
+            },
+            {
+                id: 26,
+                question: "True or False: Cash Disbursement transactions cannot be recorded in the General Journal.",
+                type: "truefalse",
+                correct: "false",
+                points: 1
+            },
+            {
+                id: 27,
+                question: "True or False: The Post-Closing Trial Balance includes expense accounts.",
+                type: "truefalse",
+                correct: "false",
+                points: 1
+            },
+            {
+                id: 28,
+                question: "True or False: The Accounting Cycle is completed within one fiscal year.",
+                type: "truefalse",
+                correct: "true",
+                points: 1
+            },
+            {
+                id: 29,
+                question: "True or False: A Worksheet can replace the need for adjusting entries.",
+                type: "truefalse",
+                correct: "false",
+                points: 1
+            },
+            {
+                id: 30,
+                question: "True or False: The Statement of Partner's Equity is used for corporations.",
+                type: "truefalse",
+                correct: "false",
+                points: 1
+            },
+            {
+                id: 31,
+                question: "True or False: Posting involves transferring information from the Ledger to the Journal.",
+                type: "truefalse",
+                correct: "false",
+                points: 1
+            },
+            {
+                id: 32,
+                question: "True or False: The Cash Receipts Journal records all monies received.",
+                type: "truefalse",
+                correct: "true",
+                points: 1
+            },
+            {
+                id: 33,
+                question: "True or False: Closing entries are used to clear temporary accounts to zero balance.",
+                type: "truefalse",
+                correct: "true",
+                points: 1
+            },
+            {
+                id: 34,
+                question: "True or False: The Unadjusted Trial Balance includes accrued expenses.",
+                type: "truefalse",
+                correct: "false",
+                points: 1
+            },
+            {
+                id: 35,
+                question: "True or False: The Statement of Financial Position shows historical cost of all assets.",
+                type: "truefalse",
+                correct: "false",
+                points: 1
+            },
+            {
+                id: 36,
+                question: "True or False: Reversing entries are optional but helpful for the next period.",
+                type: "truefalse",
+                correct: "true",
+                points: 1
+            },
+            {
+                id: 37,
+                question: "True or False: The General Ledger contains a complete record of all account balances.",
+                type: "truefalse",
+                correct: "true",
+                points: 1
+            },
+            {
+                id: 38,
+                question: "True or False: Income Summary accounts are permanent accounts.",
+                type: "truefalse",
+                correct: "false",
+                points: 1
+            },
+            {
+                id: 39,
+                question: "True or False: The Cash Disbursement Journal includes credit purchases.",
+                type: "truefalse",
+                correct: "false",
+                points: 1
+            },
+            {
+                id: 40,
+                question: "True or False: Adjusting entries affect only temporary accounts.",
+                type: "truefalse",
+                correct: "false",
+                points: 1
+            },
+            {
+                id: 41,
+                question: "True or False: The Adjusted Trial Balance is prepared after recording all entries but before closing.",
+                type: "truefalse",
+                correct: "true",
+                points: 1
+            },
+            {
+                id: 42,
+                question: "True or False: Journal entries must be in chronological order.",
+                type: "truefalse",
+                correct: "true",
+                points: 1
+            },
+            {
+                id: 43,
+                question: "True or False: The Statement of Cash Flows uses only the direct method.",
+                type: "truefalse",
+                correct: "false",
+                points: 1
+            },
+            {
+                id: 44,
+                question: "True or False: Ledger accounts are organized by account number or title.",
+                type: "truefalse",
+                correct: "true",
+                points: 1
+            },
+            {
+                id: 45,
+                question: "True or False: Worksheet columns include spaces for both unadjusted and adjusted trial balances.",
+                type: "truefalse",
+                correct: "true",
+                points: 1
+            },
+            {
+                id: 46,
+                question: "True or False: The closing process transfers net income to the expense account.",
+                type: "truefalse",
+                correct: "false",
+                points: 1
+            },
+            {
+                id: 47,
+                question: "True or False: A trial balance cannot have balanced debits and credits due to posting errors.",
+                type: "truefalse",
+                correct: "false",
+                points: 1
+            },
+            {
+                id: 48,
+                question: "True or False: The Accounting Cycle includes the preparation of financial statements.",
+                type: "truefalse",
+                correct: "true",
+                points: 1
+            },
+            {
+                id: 49,
+                question: "True or False: All adjusting entries must involve at least one temporary account.",
+                type: "truefalse",
+                correct: "false",
+                points: 1
+            },
+            {
+                id: 50,
+                question: "True or False: Cash transactions are only recorded in specialized journals.",
+                type: "truefalse",
+                correct: "false",
+                points: 1
+            },
+            {
+                id: 51,
+                question: "True or False: The General Ledger serves as the basis for the Trial Balance.",
+                type: "truefalse",
+                correct: "true",
+                points: 1
+            },
+            {
+                id: 52,
+                question: "True or False: Closing entries reduce all temporary accounts to zero.",
+                type: "truefalse",
+                correct: "true",
+                points: 1
+            },
+            {
+                id: 53,
+                question: "True or False: The Statement of Partner's Equity must show each partner's capital separately.",
+                type: "truefalse",
+                correct: "true",
+                points: 1
+            },
+            {
+                id: 54,
+                question: "True or False: Depreciation expense adjustments affect both the Balance Sheet and Income Statement.",
+                type: "truefalse",
+                correct: "true",
+                points: 1
+            },
+            {
+                id: 55,
+                question: "True or False: The Post-Closing Trial Balance has a different total from the Closing Trial Balance.",
+                type: "truefalse",
+                correct: "false",
+                points: 1
+            },
+            {
+                id: 56,
+                question: "True or False: Special journals increase the efficiency of the accounting process.",
+                type: "truefalse",
+                correct: "true",
+                points: 1
+            },
+            {
+                id: 57,
+                question: "True or False: The Statement of Comprehensive Income is the same as the Income Statement.",
+                type: "truefalse",
+                correct: "false",
+                points: 1
+            },
+            {
+                id: 58,
+                question: "True or False: Journal entries show the account titles affected by a transaction.",
+                type: "truefalse",
+                correct: "true",
+                points: 1
+            },
+            {
+                id: 59,
+                question: "True or False: The Cash Receipts Journal cannot be used for services rendered.",
+                type: "truefalse",
+                correct: "false",
+                points: 1
+            },
+            {
+                id: 60,
+                question: "True or False: A balanced trial balance guarantees no errors in the accounting records.",
+                type: "truefalse",
+                correct: "false",
+                points: 1
+            },
+
+            // Identification (40 questions)
+            {
+                id: 61,
+                question: "Identify the first step in the Accounting Cycle.",
+                type: "identification",
+                correct: "analyzing or recording transactions",
+                points: 1
+            },
+            {
+                id: 62,
+                question: "Identify the journal used for recording all miscellaneous transactions.",
+                type: "identification",
+                correct: "general journal",
+                points: 1
+            },
+            {
+                id: 63,
+                question: "Identify the process of transferring journal entries to the Ledger.",
+                type: "identification",
+                correct: "posting",
+                points: 1
+            },
+            {
+                id: 64,
+                question: "Identify the document that lists all account balances in a two-column format.",
+                type: "identification",
+                correct: "trial balance",
+                points: 1
+            },
+            {
+                id: 65,
+                question: "Identify the entries made to update account balances at period end.",
+                type: "identification",
+                correct: "adjusting entries",
+                points: 1
+            },
+            {
+                id: 66,
+                question: "Identify the statement showing financial position at a specific date.",
+                type: "identification",
+                correct: "statement of financial position or balance sheet",
+                points: 1
+            },
+            {
+                id: 67,
+                question: "Identify the ledger containing detailed records for a specific account type.",
+                type: "identification",
+                correct: "subsidiary ledger",
+                points: 1
+            },
+            {
+                id: 68,
+                question: "Identify the entries used to close temporary accounts at year-end.",
+                type: "identification",
+                correct: "closing entries",
+                points: 1
+            },
+            {
+                id: 69,
+                question: "Identify the account used to summarize revenues and expenses during closing.",
+                type: "identification",
+                correct: "income summary",
+                points: 1
+            },
+            {
+                id: 70,
+                question: "Identify the trial balance prepared after closing entries.",
+                type: "identification",
+                correct: "post-closing trial balance",
+                points: 1
+            },
+            {
+                id: 71,
+                question: "Identify the statement that shows revenues and expenses for a period.",
+                type: "identification",
+                correct: "statement of comprehensive income or income statement",
+                points: 1
+            },
+            {
+                id: 72,
+                question: "Identify the journal recording all cash inflows.",
+                type: "identification",
+                correct: "cash receipts journal",
+                points: 1
+            },
+            {
+                id: 73,
+                question: "Identify the journal recording all cash outflows.",
+                type: "identification",
+                correct: "cash disbursement journal",
+                points: 1
+            },
+            {
+                id: 74,
+                question: "Identify the document prepared to assist in adjusting and closing accounts.",
+                type: "identification",
+                correct: "worksheet",
+                points: 1
+            },
+            {
+                id: 75,
+                question: "Identify the statement showing changes in owner's equity for a period.",
+                type: "identification",
+                correct: "statement of partner's equity or statement of owner's equity",
+                points: 1
+            },
+            {
+                id: 76,
+                question: "Identify the statement showing sources and uses of cash.",
+                type: "identification",
+                correct: "statement of cash flows",
+                points: 1
+            },
+            {
+                id: 77,
+                question: "Identify the trial balance prepared before adjusting entries.",
+                type: "identification",
+                correct: "unadjusted trial balance",
+                points: 1
+            },
+            {
+                id: 78,
+                question: "Identify the trial balance prepared after adjusting entries but before closing.",
+                type: "identification",
+                correct: "adjusted trial balance",
+                points: 1
+            },
+            {
+                id: 79,
+                question: "Identify the systematic process of recording, posting, and closing accounts.",
+                type: "identification",
+                correct: "accounting cycle",
+                points: 1
+            },
+            {
+                id: 80,
+                question: "Identify accounts that are closed at the end of each period.",
+                type: "identification",
+                correct: "temporary accounts or nominal accounts",
+                points: 1
+            },
+            {
+                id: 81,
+                question: "Identify accounts that are never closed during the accounting cycle.",
+                type: "identification",
+                correct: "permanent accounts or real accounts",
+                points: 1
+            },
+            {
+                id: 82,
+                question: "Identify the account used to separate individual partner capital balances.",
+                type: "identification",
+                correct: "partner capital or owner capital",
+                points: 1
+            },
+            {
+                id: 83,
+                question: "Identify the account that shows withdrawals or distributions by partners.",
+                type: "identification",
+                correct: "drawing or withdrawal account",
+                points: 1
+            },
+            {
+                id: 84,
+                question: "Identify the process of checking posting accuracy between the journal and ledger.",
+                type: "identification",
+                correct: "reconciliation or verification",
+                points: 1
+            },
+            {
+                id: 85,
+                question: "Identify the account that accumulates depreciation charges over time.",
+                type: "identification",
+                correct: "accumulated depreciation",
+                points: 1
+            },
+            {
+                id: 86,
+                question: "Identify the type of entry made to prepare accounts for the next period.",
+                type: "identification",
+                correct: "reversing entry",
+                points: 1
+            },
+            {
+                id: 87,
+                question: "Identify the side of an account (left or right) where increases to assets are recorded.",
+                type: "identification",
+                correct: "debit or left",
+                points: 1
+            },
+            {
+                id: 88,
+                question: "Identify the method of keeping two-column account records in the ledger.",
+                type: "identification",
+                correct: "t-account or standard ledger account",
+                points: 1
+            },
+            {
+                id: 89,
+                question: "Identify the numerical code used to classify and organize ledger accounts.",
+                type: "identification",
+                correct: "account number or chart of accounts",
+                points: 1
+            },
+            {
+                id: 90,
+                question: "Identify the accounting principle requiring consistency in methods from period to period.",
+                type: "identification",
+                correct: "consistency principle",
+                points: 1
+            },
+            {
+                id: 91,
+                question: "Identify the financial statement showing net increase or decrease in cash.",
+                type: "identification",
+                correct: "statement of cash flows",
+                points: 1
+            },
+            {
+                id: 92,
+                question: "Identify the document listing source documents for each journal entry.",
+                type: "identification",
+                correct: "source document or receipt",
+                points: 1
+            },
+            {
+                id: 93,
+                question: "Identify the period for which financial statements are typically prepared.",
+                type: "identification",
+                correct: "fiscal year or accounting period",
+                points: 1
+            },
+            {
+                id: 94,
+                question: "Identify the account classification for business assets like equipment.",
+                type: "identification",
+                correct: "asset or fixed asset",
+                points: 1
+            },
+            {
+                id: 95,
+                question: "Identify the account type for amounts owed to creditors.",
+                type: "identification",
+                correct: "liability or current liability",
+                points: 1
+            },
+            {
+                id: 96,
+                question: "Identify the control account that ensures subsidiary ledger accuracy.",
+                type: "identification",
+                correct: "control account or accounts receivable",
+                points: 1
+            },
+            {
+                id: 97,
+                question: "Identify the reconciliation process between the subsidiary and general ledgers.",
+                type: "identification",
+                correct: "subsidiary ledger reconciliation",
+                points: 1
+            },
+            {
+                id: 98,
+                question: "Identify the final step in the Accounting Cycle.",
+                type: "identification",
+                correct: "closing entries or post-closing trial balance",
+                points: 1
+            },
+            {
+                id: 99,
+                question: "Identify the document that provides the basis for a journal entry.",
+                type: "identification",
+                correct: "source document",
+                points: 1
+            },
+            {
+                id: 100,
+                question: "Identify the summary of all transactions of a specific account in the ledger.",
+                type: "identification",
+                correct: "ledger account or t-account",
+                points: 1
+            }
+        ];
+
+        let currentQuestion = 0;
+        let score = 0;
+        let correct = 0;
+        let streak = 0;
+        let totalPoints = 0;
+        const userAnswers = {};
+
+        function initQuiz() {
+            const totalQuestions = questions.length;
+            document.getElementById('q-total').textContent = totalQuestions;
+            questions.forEach(q => totalPoints += q.points);
+            renderQuestion();
+        }
+
+        function renderQuestion() {
+            if (currentQuestion >= questions.length) {
+                showResults();
+                return;
+            }
+
+            const q = questions[currentQuestion];
+            const container = document.getElementById('questions-container');
+            container.innerHTML = '';
+
+            const card = document.createElement('div');
+            card.className = 'q-card';
+            card.style.animationDelay = '0s';
+
+            let content = `
+                <div class="q-eyebrow">Question ${currentQuestion + 1} of ${questions.length}</div>
+                <div class="q-text">${q.question}</div>
+            `;
+
+            if (q.type === 'multiple') {
+                content += '<div class="choices">';
+                q.options.forEach((opt, idx) => {
+                    content += `
+                        <button class="choice-btn" data-value="${opt.value}" onclick="answerMultiple('${opt.value}', '${q.correct}', ${q.points})">
+                            <span class="choice-letter">${String.fromCharCode(97 + idx)}</span>
+                            <span>${opt.text}</span>
+                        </button>
+                    `;
+                });
+                content += '</div>';
+            } else if (q.type === 'truefalse') {
+                content += '<div class="choices">';
+                content += `
+                    <button class="choice-btn" data-value="true" onclick="answerTrueFalse('true', '${q.correct}', ${q.points})">
+                        <span class="choice-letter">a</span>
+                        <span>True</span>
+                    </button>
+                    <button class="choice-btn" data-value="false" onclick="answerTrueFalse('false', '${q.correct}', ${q.points})">
+                        <span class="choice-letter">b</span>
+                        <span>False</span>
+                    </button>
+                `;
+                content += '</div>';
+            } else if (q.type === 'identification') {
+                content += `
+                    <input type="text" class="input-answer" id="text-answer" placeholder="Type your answer...">
+                    <button class="btn-submit-ans" onclick="answerIdentification('${q.correct}', ${q.points})">Submit Answer</button>
+                    <div class="feedback-box feedback-correct" id="feedback">
+                        Correct answer!
+                    </div>
+                `;
+            }
+
+            card.innerHTML = content;
+            container.appendChild(card);
+
+            const navRow = document.createElement('div');
+            navRow.className = 'nav-row';
+            const nextBtn = document.createElement('button');
+            nextBtn.className = 'btn-next';
+            nextBtn.id = 'btn-next-q';
+            nextBtn.textContent = 'Next Question →';
+            nextBtn.onclick = nextQuestion;
+            navRow.appendChild(nextBtn);
+            container.appendChild(navRow);
+        }
+
+        function answerMultiple(value, correctAnswer, points) {
+            const buttons = document.querySelectorAll('.choice-btn');
+            buttons.forEach(b => b.disabled = true);
+
+            const clicked = document.querySelector(`[data-value="${value}"]`);
+            const isCorrect = value === correctAnswer;
+
+            if (isCorrect) {
+                clicked.classList.add('correct');
+                score += points;
+                correct++;
+                streak++;
+                showFeedback(true);
+            } else {
+                clicked.classList.add('wrong');
+                document.querySelector(`[data-value="${correctAnswer}"]`).classList.add('reveal-correct');
+                streak = 0;
+                showFeedback(false);
+            }
+
+            userAnswers[questions[currentQuestion].id] = value;
+            updateStats();
+            setTimeout(() => {
+                document.getElementById('btn-next-q').style.display = 'inline-block';
+            }, 800);
+        }
+
+        function answerTrueFalse(value, correctAnswer, points) {
+            const buttons = document.querySelectorAll('.choice-btn');
+            buttons.forEach(b => b.disabled = true);
+
+            const clicked = document.querySelector(`[data-value="${value}"]`);
+            const isCorrect = value === correctAnswer;
+
+            if (isCorrect) {
+                clicked.classList.add('correct');
+                score += points;
+                correct++;
+                streak++;
+                showFeedback(true);
+            } else {
+                clicked.classList.add('wrong');
+                document.querySelector(`[data-value="${correctAnswer}"]`).classList.add('reveal-correct');
+                streak = 0;
+                showFeedback(false);
+            }
+
+            userAnswers[questions[currentQuestion].id] = value;
+            updateStats();
+            setTimeout(() => {
+                document.getElementById('btn-next-q').style.display = 'inline-block';
+            }, 800);
+        }
+
+        function answerIdentification(correctAnswer, points) {
+            const input = document.getElementById('text-answer');
+            const value = input.value.trim().toLowerCase();
+
+            if (!value) {
+                alert('Please provide an answer!');
+                return;
+            }
+
+            const correctAnswers = correctAnswer.toLowerCase().split(' or ').map(a => a.trim());
+            const isCorrect = correctAnswers.some(ans => value.includes(ans) || ans.includes(value));
+
+            input.disabled = true;
+            document.querySelector('.btn-submit-ans').disabled = true;
+
+            if (isCorrect) {
+                score += points;
+                correct++;
+                streak++;
+                showFeedback(true);
+            } else {
+                streak = 0;
+                showFeedback(false);
+            }
+
+            userAnswers[questions[currentQuestion].id] = value;
+            updateStats();
+            setTimeout(() => {
+                document.getElementById('btn-next-q').style.display = 'inline-block';
+            }, 800);
+        }
+
+        function showFeedback(isCorrect) {
+            const feedback = document.querySelector('.feedback-box');
+            if (feedback) {
+                feedback.style.display = 'block';
+                feedback.textContent = isCorrect ? 
+                    "i love you, proud of u always love 💕" : 
+                    "keep going, you're more than that baby 💪";
+                feedback.className = isCorrect ? 
+                    'feedback-box feedback-correct' : 
+                    'feedback-box feedback-wrong';
+            }
+        }
+
+        function nextQuestion() {
+            currentQuestion++;
+            renderQuestion();
+        }
+
+        function updateStats() {
+            document.getElementById('q-done').textContent = currentQuestion + 1;
+            document.getElementById('correct').textContent = correct;
+            const percentage = Math.round((correct / questions.length) * 100);
+            document.getElementById('score').textContent = percentage;
+            document.getElementById('streak').textContent = streak;
+            document.getElementById('prog-pct').textContent = Math.round(((currentQuestion + 1) / questions.length) * 100) + '%';
+            document.getElementById('prog-fill').style.width = (((currentQuestion + 1) / questions.length) * 100) + '%';
+        }
+
+        function showResults() {
+            document.getElementById('questions-container').innerHTML = '';
+            const results = document.getElementById('results');
+            results.classList.add('show');
+            const percentage = Math.round((correct / questions.length) * 100);
+            document.getElementById('final-score').textContent = percentage;
+            document.getElementById('results-message').textContent = 
+                `You answered ${correct} out of 100 questions correctly. You scored ${percentage}%.\n\nYou did amazing! I'm so proud of you! 💕🌷`;
+        }
+
+        // Initialize
+        initQuiz();
+    </script>
+</body>
+</html>
