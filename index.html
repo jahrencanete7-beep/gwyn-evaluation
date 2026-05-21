@@ -1,0 +1,713 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gwyn's Self-Evaluation 🌷</title>
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;0,700;1,400;1,600&family=Jost:wght@300;400;500;600&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+    <style>
+        *, *::before, *::after {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+        :root {
+            --bg: #fdf5f7;
+            --bg2: #f7e8ed;
+            --surface: #ffffff;
+            --border: #f0d0da;
+            --border2: #e0b0c0;
+            --text: #2a1520;
+            --text2: #8a4a60;
+            --text3: #c090a8;
+            --ink: #1e0f18;
+            --tulip: #e0405a;
+            --tulip-deep: #b02040;
+            --tulip-light: #fff0f3;
+            --tulip-border: #f5c0cc;
+            --stem: #4a7a50;
+            --stem-light: #eaf5ec;
+            --stem-border: #b0d4b8;
+            --petal-pink: #f5a0b8;
+            --petal-soft: #fde8ef;
+            --amber: #d4805a;
+            --amber-light: #fdf3ee;
+            --r: 16px;
+            --r-sm: 10px;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: 'Jost', sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            min-height: 100vh;
+            padding: 0 0 6rem;
+            position: relative;
+            overflow-x: hidden;
+        }
+
+        body::before {
+            content: '';
+            position: fixed;
+            inset: 0;
+            background: radial-gradient(ellipse 70% 55% at 5% 5%, rgba(224,64,90,0.08) 0%, transparent 55%),
+                        radial-gradient(ellipse 55% 45% at 95% 85%, rgba(245,160,184,0.12) 0%, transparent 55%),
+                        radial-gradient(ellipse 40% 40% at 80% 10%, rgba(212,128,90,0.07) 0%, transparent 50%);
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        .tulip-bg {
+            position: fixed;
+            pointer-events: none;
+            z-index: 0;
+            opacity: 0.06;
+        }
+        .tulip-bg-1 { top: -40px; right: -30px; width: 260px; transform: rotate(15deg); }
+        .tulip-bg-2 { bottom: 60px; left: -50px; width: 200px; transform: rotate(-10deg) scaleX(-1); }
+
+        .wrap {
+            max-width: 680px;
+            margin: 0 auto;
+            padding: 0 1.25rem;
+            position: relative;
+            z-index: 1;
+        }
+
+        header {
+            padding: 3.5rem 0 2rem;
+            text-align: center;
+            position: relative;
+        }
+
+        .tulip-crown {
+            display: flex;
+            justify-content: center;
+            gap: 8px;
+            margin-bottom: 1rem;
+            animation: petalDrop .7s ease both;
+        }
+        .tulip-crown svg { width: 32px; height: 42px; }
+
+        .header-eyebrow {
+            font-family: 'DM Mono', monospace;
+            font-size: 0.62rem;
+            letter-spacing: 0.2em;
+            text-transform: uppercase;
+            color: var(--text3);
+            margin-bottom: 0.75rem;
+            animation: fadeUp .5s .1s ease both;
+        }
+        header h1 {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: clamp(1.9rem, 5.5vw, 2.7rem);
+            font-weight: 600;
+            letter-spacing: -0.01em;
+            color: var(--ink);
+            line-height: 1.2;
+            margin-bottom: 0.5rem;
+            animation: fadeUp .5s .15s ease both;
+        }
+        header h1 em { font-style: italic; color: var(--tulip); }
+        .header-sub {
+            font-size: 0.82rem;
+            color: var(--text2);
+            animation: fadeUp .5s .2s ease both;
+        }
+        header::after {
+            content: '✦ 🌷 ✦';
+            display: block;
+            margin: 1.25rem auto 0;
+            font-size: 0.85rem;
+            color: var(--petal-pink);
+            letter-spacing: 0.4em;
+            animation: fadeUp .5s .25s ease both;
+        }
+
+        .stats-row {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 8px;
+            margin-bottom: 1.25rem;
+            animation: fadeUp .5s .3s ease both;
+        }
+        .stat-card {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: var(--r-sm);
+            padding: 0.7rem 0.5rem;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+        .stat-card::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; right: 0;
+            height: 3px;
+            background: linear-gradient(90deg, var(--petal-pink), var(--tulip));
+            opacity: 0.6;
+        }
+        .stat-label {
+            font-family: 'DM Mono', monospace;
+            font-size: 0.58rem;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            color: var(--text3);
+            margin-bottom: 4px;
+        }
+        .stat-val {
+            font-size: 1.25rem;
+            font-weight: 600;
+            font-family: 'Cormorant Garamond', serif;
+        }
+        .sv-green { color: var(--stem); }
+        .sv-rose { color: var(--tulip); }
+        .sv-amber { color: var(--amber); }
+        .sv-blue { color: #7060b0; }
+
+        .prog-wrap {
+            margin-bottom: 1.5rem;
+            animation: fadeUp .5s .35s ease both;
+        }
+        .prog-meta {
+            display: flex;
+            justify-content: space-between;
+            font-size: 0.73rem;
+            color: var(--text2);
+            margin-bottom: 7px;
+            font-family: 'DM Mono', monospace;
+        }
+        .prog-bar {
+            height: 6px;
+            background: var(--bg2);
+            border-radius: 99px;
+            overflow: hidden;
+            position: relative;
+        }
+        .prog-fill {
+            height: 100%;
+            background: linear-gradient(90deg, var(--petal-pink), var(--tulip), var(--tulip-deep));
+            border-radius: 99px;
+            transition: width .5s cubic-bezier(.4,0,.2,1);
+            position: relative;
+        }
+        .prog-fill::after {
+            content: '🌷';
+            position: absolute;
+            right: -10px;
+            top: 50%;
+            transform: translateY(-50%);
+            font-size: 14px;
+            line-height: 1;
+        }
+
+        .q-card {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: var(--r);
+            padding: 2rem;
+            margin-bottom: 1rem;
+            animation: fadeUp .4s ease both;
+            box-shadow: 0 4px 24px rgba(224,64,90,0.07), 0 1px 4px rgba(224,64,90,0.04);
+            position: relative;
+            overflow: hidden;
+        }
+        .q-card::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; right: 0;
+            height: 4px;
+            background: linear-gradient(90deg, var(--petal-pink) 0%, var(--tulip) 50%, var(--petal-pink) 100%);
+        }
+        .q-card::after {
+            content: '🌷';
+            position: absolute;
+            bottom: 14px; right: 18px;
+            font-size: 1.4rem;
+            opacity: 0.12;
+            transform: rotate(20deg);
+            pointer-events: none;
+        }
+
+        .q-eyebrow {
+            font-family: 'DM Mono', monospace;
+            font-size: 0.6rem;
+            letter-spacing: 0.14em;
+            text-transform: uppercase;
+            color: var(--text3);
+            margin-bottom: 0.8rem;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+        .q-eyebrow::before { content: '🌷'; font-size: 0.7rem; opacity: 0.6; }
+
+        .q-text {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 1.18rem;
+            font-weight: 400;
+            line-height: 1.65;
+            color: var(--ink);
+            margin-bottom: 1.5rem;
+        }
+
+        .choices {
+            display: flex;
+            flex-direction: column;
+            gap: 9px;
+        }
+        .choice-btn {
+            background: var(--bg);
+            border: 1.5px solid var(--border);
+            border-radius: var(--r-sm);
+            padding: 0.85rem 1.1rem;
+            text-align: left;
+            font-family: 'Jost', sans-serif;
+            font-size: 0.875rem;
+            font-weight: 400;
+            color: var(--text);
+            cursor: pointer;
+            transition: background .15s, border-color .15s, transform .1s, box-shadow .15s;
+            display: flex;
+            align-items: flex-start;
+            gap: 10px;
+        }
+        .choice-btn:hover:not(:disabled) {
+            background: var(--petal-soft);
+            border-color: var(--petal-pink);
+            box-shadow: 0 2px 12px rgba(224,64,90,0.08);
+            transform: translateY(-1px);
+        }
+        .choice-btn:active:not(:disabled) { transform: scale(0.99); }
+        .choice-letter {
+            font-family: 'DM Mono', monospace;
+            font-size: 0.63rem;
+            color: var(--text3);
+            margin-top: 3px;
+            min-width: 14px;
+            flex-shrink: 0;
+        }
+        .choice-btn.correct {
+            background: var(--stem-light);
+            border-color: var(--stem-border);
+            color: var(--stem);
+            box-shadow: 0 2px 10px rgba(74,122,80,0.1);
+        }
+        .choice-btn.correct .choice-letter { color: var(--stem); }
+        .choice-btn.wrong {
+            background: var(--tulip-light);
+            border-color: var(--tulip-border);
+            color: var(--tulip);
+        }
+        .choice-btn.wrong .choice-letter { color: var(--tulip); }
+        .choice-btn.reveal-correct {
+            background: var(--stem-light);
+            border-color: var(--stem-border);
+            color: var(--stem);
+        }
+        .choice-btn.reveal-correct .choice-letter { color: var(--stem); }
+        .choice-btn:disabled { cursor: default; }
+
+        .input-answer {
+            width: 100%;
+            padding: 0.85rem 1.1rem;
+            border: 1.5px solid var(--border);
+            border-radius: var(--r-sm);
+            font-family: 'Jost', sans-serif;
+            font-size: 0.875rem;
+            background: var(--bg);
+            color: var(--text);
+            margin-bottom: 1rem;
+        }
+        .btn-submit-ans {
+            background: linear-gradient(135deg, var(--tulip), var(--tulip-deep));
+            color: #fff;
+            border: none;
+            border-radius: var(--r-sm);
+            padding: 0.7rem 1.2rem;
+            font-weight: 500;
+            cursor: pointer;
+        }
+
+        .feedback-box {
+            margin-top: 1rem;
+            padding: 0.8rem 1.1rem;
+            border-radius: var(--r-sm);
+            font-size: 0.84rem;
+            line-height: 1.55;
+            display: none;
+            animation: fadeUp .25s ease;
+            font-weight: 500;
+        }
+        .feedback-correct {
+            background: var(--stem-light);
+            color: var(--stem);
+            border: 1.5px solid var(--stem-border);
+        }
+        .feedback-wrong {
+            background: var(--tulip-light);
+            color: var(--tulip-deep);
+            border: 1.5px solid var(--tulip-border);
+        }
+
+        .nav-row {
+            display: flex;
+            justify-content: flex-end;
+            margin-bottom: 1.5rem;
+        }
+        .btn-next {
+            display: none;
+            font-family: 'Jost', sans-serif;
+            font-size: 0.875rem;
+            font-weight: 600;
+            padding: 10px 26px;
+            background: linear-gradient(135deg, var(--tulip), var(--tulip-deep));
+            color: #fff;
+            border: none;
+            border-radius: 99px;
+            cursor: pointer;
+            transition: opacity .15s, transform .1s, box-shadow .15s;
+            letter-spacing: 0.03em;
+            box-shadow: 0 4px 16px rgba(224,64,90,0.3);
+        }
+        .btn-next:hover {
+            opacity: 0.9;
+            transform: translateY(-1px);
+            box-shadow: 0 6px 20px rgba(224,64,90,0.35);
+        }
+        .btn-next:active { transform: scale(0.97); }
+
+        .maldita-meter {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: var(--r-sm);
+            padding: 0.9rem 1.2rem;
+            margin-bottom: 1.5rem;
+            animation: fadeUp .5s .4s ease both;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .meter-label {
+            font-family: 'DM Mono', monospace;
+            font-size: 0.65rem;
+            letter-spacing: 0.12em;
+            text-transform: uppercase;
+            color: var(--text3);
+        }
+        .meter-val {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 1.4rem;
+            font-weight: 600;
+            color: var(--tulip);
+        }
+
+        .results-summary {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: var(--r);
+            padding: 2rem;
+            text-align: center;
+            box-shadow: 0 4px 24px rgba(224,64,90,0.07);
+            display: none;
+            animation: fadeUp .5s ease;
+        }
+        .results-summary.show { display: block; }
+        .results-summary h2 {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 1.8rem;
+            color: var(--ink);
+            margin-bottom: 1rem;
+        }
+        .results-summary p {
+            font-size: 0.95rem;
+            line-height: 1.6;
+            color: var(--text2);
+            margin-bottom: 1.5rem;
+        }
+        .btn-restart {
+            background: linear-gradient(135deg, var(--stem), #5a9a60);
+            color: #fff;
+            border: none;
+            border-radius: var(--r-sm);
+            padding: 0.7rem 1.5rem;
+            font-weight: 600;
+            cursor: pointer;
+            font-family: 'Jost', sans-serif;
+        }
+
+        @keyframes fadeUp {
+            from { opacity: 0; transform: translateY(12px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        @keyframes petalDrop {
+            0% { opacity: 0; transform: translateY(-20px); }
+            100% { opacity: 1; transform: translateY(0); }
+        }
+
+        .hidden { display: none !important; }
+    </style>
+</head>
+<body>
+    <svg class="tulip-bg tulip-bg-1" viewBox="0 0 200 280" xmlns="http://www.w3.org/2000/svg">
+        <path d="M100 20 C110 40, 120 70, 115 100 C110 130, 100 160, 100 200 L100 200 C100 160, 90 130, 85 100 C80 70, 90 40, 100 20" fill="currentColor" opacity="0.3"/>
+        <ellipse cx="100" cy="220" rx="8" ry="40" fill="currentColor" opacity="0.2"/>
+    </svg>
+    <svg class="tulip-bg tulip-bg-2" viewBox="0 0 200 280" xmlns="http://www.w3.org/2000/svg">
+        <path d="M100 20 C110 40, 120 70, 115 100 C110 130, 100 160, 100 200 L100 200 C100 160, 90 130, 85 100 C80 70, 90 40, 100 20" fill="currentColor" opacity="0.3"/>
+        <ellipse cx="100" cy="220" rx="8" ry="40" fill="currentColor" opacity="0.2"/>
+    </svg>
+
+    <div class="wrap">
+        <header>
+            <div class="tulip-crown">
+                <svg viewBox="0 0 32 42" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M16 2 C16 2, 8 15, 8 22 C8 30, 12 38, 16 40 C20 38, 24 30, 24 22 C24 15, 16 2, 16 2" fill="#e0405a"/>
+                </svg>
+            </div>
+            <p class="header-eyebrow">Self-evaluation</p>
+            <h1>Gwyn's <em>Inner World</em></h1>
+            <p class="header-sub">A gentle exploration of values, growth, and authenticity</p>
+        </header>
+
+        <div class="stats-row">
+            <div class="stat-card">
+                <div class="stat-label">Q Progress</div>
+                <div class="stat-val"><span id="q-done">0</span>/<span id="q-total">0</span></div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-label">Score</div>
+                <div class="stat-val sv-green"><span id="score">0</span>%</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-label">Answers</div>
+                <div class="stat-val sv-rose"><span id="answers">0</span></div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-label">Streak</div>
+                <div class="stat-val sv-amber"><span id="streak">0</span></div>
+            </div>
+        </div>
+
+        <div class="prog-wrap">
+            <div class="prog-meta">
+                <span>Overall Progress</span>
+                <span id="prog-pct">0%</span>
+            </div>
+            <div class="prog-bar">
+                <div class="prog-fill" id="prog-fill" style="width: 0%"></div>
+            </div>
+        </div>
+
+        <div class="maldita-meter">
+            <span class="meter-label">Authenticity Meter</span>
+            <span class="meter-val" id="authenticity">0</span>
+        </div>
+
+        <div id="questions-container"></div>
+
+        <div class="results-summary" id="results">
+            <h2>✨ Evaluation Complete ✨</h2>
+            <p id="results-message">Thank you for taking the time for self-reflection. Your honest answers provide valuable insights into who you are.</p>
+            <button class="btn-restart" onclick="location.reload()">Take Again</button>
+        </div>
+    </div>
+
+    <script>
+        const questions = [
+            {
+                id: 1,
+                question: "What aspect of yourself are you most proud of?",
+                type: "text",
+                points: 10
+            },
+            {
+                id: 2,
+                question: "How do you define personal growth?",
+                type: "multiple",
+                options: [
+                    { text: "Overcoming challenges and fears", value: "a" },
+                    { text: "Learning new skills and knowledge", value: "b" },
+                    { text: "Becoming more compassionate", value: "c" },
+                    { text: "All of the above", value: "d" }
+                ],
+                correct: "d",
+                points: 15
+            },
+            {
+                id: 3,
+                question: "What does authenticity mean to you?",
+                type: "text",
+                points: 10
+            },
+            {
+                id: 4,
+                question: "What are your core values?",
+                type: "multiple",
+                options: [
+                    { text: "Honesty and integrity", value: "a" },
+                    { text: "Kindness and empathy", value: "b" },
+                    { text: "Growth and curiosity", value: "c" },
+                    { text: "Freedom and independence", value: "d" }
+                ],
+                correct: "b",
+                points: 15
+            },
+            {
+                id: 5,
+                question: "How do you handle uncertainty?",
+                type: "text",
+                points: 10
+            }
+        ];
+
+        let currentQuestion = 0;
+        let score = 0;
+        let answers = 0;
+        let streak = 0;
+        let totalPoints = 0;
+        const userAnswers = {};
+
+        function initQuiz() {
+            const totalQuestions = questions.length;
+            document.getElementById('q-total').textContent = totalQuestions;
+            questions.forEach(q => totalPoints += q.points);
+            renderQuestion();
+        }
+
+        function renderQuestion() {
+            if (currentQuestion >= questions.length) {
+                showResults();
+                return;
+            }
+
+            const q = questions[currentQuestion];
+            const container = document.getElementById('questions-container');
+            container.innerHTML = '';
+
+            const card = document.createElement('div');
+            card.className = 'q-card';
+            card.style.animationDelay = '0s';
+
+            let content = `
+                <div class="q-eyebrow">Question ${currentQuestion + 1} of ${questions.length}</div>
+                <div class="q-text">${q.question}</div>
+            `;
+
+            if (q.type === 'multiple') {
+                content += '<div class="choices">';
+                q.options.forEach((opt, idx) => {
+                    content += `
+                        <button class="choice-btn" data-value="${opt.value}" onclick="answerMultiple('${opt.value}', '${q.correct}', ${q.points})">
+                            <span class="choice-letter">${String.fromCharCode(97 + idx)}</span>
+                            <span>${opt.text}</span>
+                        </button>
+                    `;
+                });
+                content += '</div>';
+            } else if (q.type === 'text') {
+                content += `
+                    <input type="text" class="input-answer" id="text-answer" placeholder="Share your thoughts...">
+                    <button class="btn-submit-ans" onclick="answerText(${q.points})">Submit Answer</button>
+                    <div class="feedback-box feedback-correct" id="feedback">
+                        ✓ Great answer! Moving forward...
+                    </div>
+                `;
+            }
+
+            card.innerHTML = content;
+            container.appendChild(card);
+
+            const navRow = document.createElement('div');
+            navRow.className = 'nav-row';
+            const nextBtn = document.createElement('button');
+            nextBtn.className = 'btn-next';
+            nextBtn.id = 'btn-next-q';
+            nextBtn.textContent = 'Next Question →';
+            nextBtn.onclick = nextQuestion;
+            navRow.appendChild(nextBtn);
+            container.appendChild(navRow);
+        }
+
+        function answerMultiple(value, correct, points) {
+            const buttons = document.querySelectorAll('.choice-btn');
+            buttons.forEach(b => b.disabled = true);
+
+            const clicked = document.querySelector(`[data-value="${value}"]`);
+            const isCorrect = value === correct;
+
+            if (isCorrect) {
+                clicked.classList.add('correct');
+                score += points;
+                streak++;
+                answers++;
+            } else {
+                clicked.classList.add('wrong');
+                document.querySelector(`[data-value="${correct}"]`).classList.add('reveal-correct');
+                streak = 0;
+            }
+
+            userAnswers[questions[currentQuestion].id] = value;
+            updateStats();
+            setTimeout(() => {
+                document.getElementById('btn-next-q').style.display = 'inline-block';
+            }, 800);
+        }
+
+        function answerText(points) {
+            const input = document.getElementById('text-answer');
+            const value = input.value.trim();
+
+            if (!value) {
+                alert('Please share something!');
+                return;
+            }
+
+            input.disabled = true;
+            document.querySelector('.btn-submit-ans').disabled = true;
+            document.getElementById('feedback').style.display = 'block';
+
+            score += points;
+            answers++;
+            streak++;
+            userAnswers[questions[currentQuestion].id] = value;
+            updateStats();
+
+            setTimeout(() => {
+                document.getElementById('btn-next-q').style.display = 'inline-block';
+            }, 800);
+        }
+
+        function nextQuestion() {
+            currentQuestion++;
+            renderQuestion();
+        }
+
+        function updateStats() {
+            document.getElementById('q-done').textContent = currentQuestion + 1;
+            document.getElementById('score').textContent = Math.round((score / totalPoints) * 100);
+            document.getElementById('answers').textContent = answers;
+            document.getElementById('streak').textContent = streak;
+            document.getElementById('authenticity').textContent = Math.round((score / totalPoints) * 100);
+            document.getElementById('prog-pct').textContent = Math.round((score / totalPoints) * 100) + '%';
+            document.getElementById('prog-fill').style.width = ((score / totalPoints) * 100) + '%';
+        }
+
+        function showResults() {
+            document.getElementById('questions-container').innerHTML = '';
+            const results = document.getElementById('results');
+            results.classList.add('show');
+            document.getElementById('results-message').textContent = 
+                `You scored ${Math.round((score / totalPoints) * 100)}% on authenticity. Thank you for your honest self-reflection.`;
+        }
+
+        // Initialize
+        initQuiz();
+    </script>
+</body>
+</html>
