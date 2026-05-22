@@ -1,0 +1,534 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Accounting Fundamentals Quiz</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+
+        .container {
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2);
+            max-width: 700px;
+            width: 100%;
+            padding: 40px;
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        .header h1 {
+            color: #333;
+            font-size: 28px;
+            margin-bottom: 10px;
+        }
+
+        .header p {
+            color: #666;
+            font-size: 14px;
+        }
+
+        .progress-bar {
+            background: #e0e0e0;
+            height: 8px;
+            border-radius: 10px;
+            margin-bottom: 30px;
+            overflow: hidden;
+        }
+
+        .progress-fill {
+            background: linear-gradient(90deg, #667eea 0%, #764ba2 100%);
+            height: 100%;
+            width: 0%;
+            transition: width 0.3s ease;
+        }
+
+        .quiz-section {
+            display: none;
+        }
+
+        .quiz-section.active {
+            display: block;
+        }
+
+        .question-number {
+            font-size: 12px;
+            color: #667eea;
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+
+        .question-text {
+            font-size: 18px;
+            color: #333;
+            margin-bottom: 20px;
+            font-weight: 600;
+        }
+
+        .options {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .option {
+            padding: 15px;
+            border: 2px solid #e0e0e0;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            background: white;
+        }
+
+        .option:hover {
+            border-color: #667eea;
+            background: #f5f5ff;
+        }
+
+        .option input[type="radio"] {
+            margin-right: 10px;
+        }
+
+        .option.selected {
+            border-color: #667eea;
+            background: #f0f4ff;
+        }
+
+        .option.correct {
+            border-color: #4caf50;
+            background: #e8f5e9;
+        }
+
+        .option.incorrect {
+            border-color: #f44336;
+            background: #ffebee;
+        }
+
+        .buttons {
+            display: flex;
+            gap: 10px;
+            margin-top: 30px;
+            justify-content: space-between;
+        }
+
+        button {
+            padding: 12px 24px;
+            border: none;
+            border-radius: 6px;
+            font-size: 14px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .btn-prev {
+            background: #e0e0e0;
+            color: #333;
+        }
+
+        .btn-prev:hover {
+            background: #d0d0d0;
+        }
+
+        .btn-next {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            flex: 1;
+        }
+
+        .btn-next:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 20px rgba(102, 126, 234, 0.4);
+        }
+
+        .btn-next:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+
+        .result-section {
+            text-align: center;
+            display: none;
+        }
+
+        .result-section.active {
+            display: block;
+        }
+
+        .result-score {
+            font-size: 48px;
+            color: #667eea;
+            font-weight: bold;
+            margin: 20px 0;
+        }
+
+        .result-message {
+            font-size: 18px;
+            color: #333;
+            margin-bottom: 30px;
+        }
+
+        .result-details {
+            background: #f5f5f5;
+            padding: 20px;
+            border-radius: 6px;
+            margin-bottom: 30px;
+            text-align: left;
+        }
+
+        .result-details p {
+            color: #666;
+            margin-bottom: 10px;
+            font-size: 14px;
+        }
+
+        .btn-restart {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 12px 32px;
+        }
+
+        .btn-restart:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 20px rgba(102, 126, 234, 0.4);
+        }
+
+        .explanation {
+            margin-top: 15px;
+            padding: 12px;
+            background: #fff3e0;
+            border-left: 4px solid #ff9800;
+            border-radius: 4px;
+            font-size: 13px;
+            color: #666;
+            display: none;
+        }
+
+        .explanation.show {
+            display: block;
+        }
+
+        @media (max-width: 600px) {
+            .container {
+                padding: 25px;
+            }
+
+            .header h1 {
+                font-size: 22px;
+            }
+
+            .question-text {
+                font-size: 16px;
+            }
+
+            .buttons {
+                flex-direction: column;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>📊 Accounting Fundamentals Quiz</h1>
+            <p>Test your knowledge of basic accounting concepts</p>
+        </div>
+
+        <div class="progress-bar">
+            <div class="progress-fill"></div>
+        </div>
+
+        <div id="quizContainer"></div>
+
+        <div class="result-section" id="resultSection">
+            <h2>Quiz Complete!</h2>
+            <div class="result-score" id="scoreDisplay"></div>
+            <div class="result-message" id="messageDisplay"></div>
+            <div class="result-details">
+                <p><strong>Total Questions:</strong> <span id="totalQuestions"></span></p>
+                <p><strong>Correct Answers:</strong> <span id="correctAnswers"></span></p>
+                <p><strong>Accuracy:</strong> <span id="accuracy"></span>%</p>
+            </div>
+            <button class="btn-restart" onclick="restartQuiz()">Restart Quiz</button>
+        </div>
+    </div>
+
+    <script>
+        const questions = [
+            {
+                question: "What is the accounting equation?",
+                options: [
+                    "Assets = Liabilities + Equity",
+                    "Income = Expenses + Profit",
+                    "Assets = Income - Expenses",
+                    "Liabilities = Assets - Equity"
+                ],
+                correct: 0,
+                explanation: "The fundamental accounting equation is Assets = Liabilities + Equity. This equation shows that a company's assets are financed by either liabilities (debts) or equity (owner's investment)."
+            },
+            {
+                question: "Which account has a normal debit balance?",
+                options: [
+                    "Revenue",
+                    "Assets",
+                    "Liabilities",
+                    "Income"
+                ],
+                correct: 1,
+                explanation: "Assets have a normal debit balance. When an asset increases, it's debited. When it decreases, it's credited. Revenue, liabilities, and income have normal credit balances."
+            },
+            {
+                question: "What is the Journal Entry for paying rent with cash?",
+                options: [
+                    "Debit Cash, Credit Rent Expense",
+                    "Debit Rent Expense, Credit Cash",
+                    "Debit Rent Income, Credit Cash",
+                    "Debit Cash, Credit Income"
+                ],
+                correct: 1,
+                explanation: "The correct entry is to Debit Rent Expense and Credit Cash. Expenses are debited when incurred, and cash (an asset) is credited when paid out."
+            },
+            {
+                question: "What does a credit balance in a liability account represent?",
+                options: [
+                    "Money owed to the company",
+                    "Money the company owes",
+                    "An increase in assets",
+                    "A decrease in expenses"
+                ],
+                correct: 1,
+                explanation: "A credit balance in a liability account represents money that the company owes. Liabilities have normal credit balances and increase with credits."
+            },
+            {
+                question: "Which of the following is NOT included in the balance sheet?",
+                options: [
+                    "Assets",
+                    "Liabilities",
+                    "Retained Earnings",
+                    "Revenue"
+                ],
+                correct: 3,
+                explanation: "Revenue is an income statement item, not a balance sheet item. The balance sheet includes assets, liabilities, and equity (including retained earnings)."
+            },
+            {
+                question: "What is the first step in the accounting cycle?",
+                options: [
+                    "Closing entries",
+                    "Analyzing and recording transactions in the journal",
+                    "Preparing financial statements",
+                    "Posting to the general ledger"
+                ],
+                correct: 1,
+                explanation: "The first step is analyzing and recording transactions in the journal (journalizing). This creates the initial record of all business transactions."
+            },
+            {
+                question: "When a company receives cash before providing services, which account is credited?",
+                options: [
+                    "Service Revenue",
+                    "Cash",
+                    "Unearned Revenue",
+                    "Accounts Receivable"
+                ],
+                correct: 2,
+                explanation: "Unearned Revenue is credited. This is a liability because the company hasn't yet provided the service—it owes the customer either a service or a refund."
+            },
+            {
+                question: "What is double-entry bookkeeping?",
+                options: [
+                    "Recording transactions twice",
+                    "Every transaction affects at least two accounts",
+                    "Having two accountants review entries",
+                    "Recording both income and expenses"
+                ],
+                correct: 1,
+                explanation: "Double-entry bookkeeping means every transaction affects at least two accounts—one is debited and one is credited. This maintains the balance of the accounting equation."
+            },
+            {
+                question: "Which financial statement shows profitability?",
+                options: [
+                    "Balance Sheet",
+                    "Cash Flow Statement",
+                    "Income Statement",
+                    "Statement of Changes in Equity"
+                ],
+                correct: 2,
+                explanation: "The Income Statement (also called Profit & Loss Statement) shows profitability by comparing revenues to expenses for a specific period."
+            },
+            {
+                question: "What is contra-asset account used for?",
+                options: [
+                    "To record liabilities",
+                    "To offset the balance of an asset account",
+                    "To record revenue",
+                    "To increase equity"
+                ],
+                correct: 1,
+                explanation: "A contra-asset account is used to offset the balance of an asset account. The most common example is Accumulated Depreciation, which reduces the value of fixed assets."
+            }
+        ];
+
+        let currentQuestion = 0;
+        let score = 0;
+        let answers = [];
+
+        function initQuiz() {
+            answers = new Array(questions.length).fill(null);
+            renderQuestions();
+            showQuestion(0);
+        }
+
+        function renderQuestions() {
+            const container = document.getElementById('quizContainer');
+            container.innerHTML = '';
+
+            questions.forEach((q, index) => {
+                const section = document.createElement('div');
+                section.className = `quiz-section ${index === 0 ? 'active' : ''}`;
+                section.id = `question-${index}`;
+
+                let optionsHTML = q.options.map((option, i) => `
+                    <label class="option">
+                        <input type="radio" name="question-${index}" value="${i}" onchange="selectAnswer(${index}, ${i})">
+                        <span>${option}</span>
+                    </label>
+                `).join('');
+
+                section.innerHTML = `
+                    <div class="question-number">Question ${index + 1} of ${questions.length}</div>
+                    <div class="question-text">${q.question}</div>
+                    <div class="options">${optionsHTML}</div>
+                    <div class="explanation" id="explanation-${index}">
+                        <strong>Explanation:</strong> ${q.explanation}
+                    </div>
+                `;
+
+                container.appendChild(section);
+            });
+
+            renderButtons();
+        }
+
+        function renderButtons() {
+            const container = document.getElementById('quizContainer');
+            const buttonsDiv = document.createElement('div');
+            buttonsDiv.className = 'buttons';
+            buttonsDiv.innerHTML = `
+                <button class="btn-prev" onclick="previousQuestion()" ${currentQuestion === 0 ? 'style="opacity: 0.5; cursor: not-allowed;"' : ''}>← Previous</button>
+                <button class="btn-next" onclick="nextQuestion()" ${currentQuestion === questions.length - 1 ? 'style="flex: 1;"' : ''}>
+                    ${currentQuestion === questions.length - 1 ? 'Submit Quiz' : 'Next →'}
+                </button>
+            `;
+            container.appendChild(buttonsDiv);
+        }
+
+        function showQuestion(index) {
+            document.querySelectorAll('.quiz-section').forEach(el => el.classList.remove('active'));
+            document.getElementById(`question-${index}`).classList.add('active');
+
+            if (answers[index] !== null) {
+                document.querySelector(`input[name="question-${index}"][value="${answers[index]}"]`).checked = true;
+                document.getElementById(`explanation-${index}`).classList.add('show');
+            }
+
+            updateProgressBar();
+        }
+
+        function selectAnswer(questionIndex, optionIndex) {
+            answers[questionIndex] = optionIndex;
+            document.getElementById(`explanation-${questionIndex}`).classList.add('show');
+        }
+
+        function nextQuestion() {
+            if (answers[currentQuestion] === null) {
+                alert('Please select an answer before continuing.');
+                return;
+            }
+
+            if (currentQuestion < questions.length - 1) {
+                currentQuestion++;
+                showQuestion(currentQuestion);
+                window.scrollTo(0, 0);
+            } else {
+                submitQuiz();
+            }
+        }
+
+        function previousQuestion() {
+            if (currentQuestion > 0) {
+                currentQuestion--;
+                showQuestion(currentQuestion);
+                window.scrollTo(0, 0);
+            }
+        }
+
+        function submitQuiz() {
+            score = 0;
+            answers.forEach((answer, index) => {
+                if (answer === questions[index].correct) {
+                    score++;
+                }
+            });
+
+            const percentage = Math.round((score / questions.length) * 100);
+            let message = '';
+
+            if (percentage === 100) {
+                message = "Perfect Score! You're an accounting expert! 🎉";
+            } else if (percentage >= 90) {
+                message = "Excellent! You have a strong understanding of accounting fundamentals. 🌟";
+            } else if (percentage >= 80) {
+                message = "Great job! You've got a solid grasp of the concepts. 👍";
+            } else if (percentage >= 70) {
+                message = "Good effort! Review the areas where you struggled. 📚";
+            } else {
+                message = "Keep practicing! Accounting takes time to master. 💪";
+            }
+
+            document.getElementById('scoreDisplay').textContent = `${score}/${questions.length}`;
+            document.getElementById('messageDisplay').textContent = message;
+            document.getElementById('totalQuestions').textContent = questions.length;
+            document.getElementById('correctAnswers').textContent = score;
+            document.getElementById('accuracy').textContent = percentage;
+
+            document.getElementById('quizContainer').style.display = 'none';
+            document.getElementById('resultSection').classList.add('active');
+        }
+
+        function updateProgressBar() {
+            const progress = ((currentQuestion + 1) / questions.length) * 100;
+            document.querySelector('.progress-fill').style.width = progress + '%';
+        }
+
+        function restartQuiz() {
+            currentQuestion = 0;
+            score = 0;
+            answers = [];
+            document.getElementById('quizContainer').style.display = 'block';
+            document.getElementById('resultSection').classList.remove('active');
+            initQuiz();
+            window.scrollTo(0, 0);
+        }
+
+        // Initialize quiz on load
+        window.addEventListener('DOMContentLoaded', initQuiz);
+    </script>
+</body>
+</html>
