@@ -1,0 +1,876 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Gwyn's Training – CPA Board Exam</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --gold: #c9a84c;
+    --gold-light: #e8c97a;
+    --dark: #0e0e12;
+    --dark2: #17171f;
+    --dark3: #1f1f2a;
+    --border: #2c2c3a;
+    --text: #e8e8f0;
+    --muted: #7a7a95;
+    --green: #3ecf8e;
+    --red: #f05a5a;
+    --blue: #5a8ef0;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    background: var(--dark);
+    color: var(--text);
+    font-family: 'DM Sans', sans-serif;
+    font-weight: 400;
+    min-height: 100vh;
+  }
+
+  /* ── HERO ── */
+  .hero {
+    background: linear-gradient(135deg, #0a0a10 0%, #1a1428 50%, #0a0e18 100%);
+    border-bottom: 1px solid var(--border);
+    padding: 3rem 1.5rem 2.5rem;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+  }
+  .hero::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(ellipse 80% 60% at 50% 0%, rgba(201,168,76,.15) 0%, transparent 70%);
+    pointer-events: none;
+  }
+  .hero-label {
+    display: inline-block;
+    font-size: .65rem;
+    font-weight: 600;
+    letter-spacing: .22em;
+    text-transform: uppercase;
+    color: var(--gold);
+    border: 1px solid rgba(201,168,76,.35);
+    padding: .35rem 1rem;
+    border-radius: 99px;
+    margin-bottom: 1.2rem;
+  }
+  .hero h1 {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(2.2rem, 7vw, 4rem);
+    font-weight: 900;
+    background: linear-gradient(135deg, var(--gold-light) 0%, var(--gold) 60%, #a07830 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    line-height: 1.1;
+    margin-bottom: .6rem;
+  }
+  .hero p {
+    color: var(--muted);
+    font-size: .95rem;
+    font-weight: 300;
+    letter-spacing: .04em;
+  }
+
+  /* ── STATS BAR ── */
+  .stats-bar {
+    display: flex;
+    justify-content: center;
+    gap: 2rem;
+    flex-wrap: wrap;
+    padding: 1.2rem 1.5rem;
+    background: var(--dark2);
+    border-bottom: 1px solid var(--border);
+  }
+  .stat {
+    display: flex;
+    align-items: center;
+    gap: .5rem;
+    font-size: .82rem;
+    color: var(--muted);
+  }
+  .stat-val {
+    font-size: 1.05rem;
+    font-weight: 600;
+    color: var(--text);
+  }
+  #score-stat .stat-val { color: var(--gold); }
+
+  /* ── CONTROLS ── */
+  .controls {
+    display: flex;
+    justify-content: center;
+    gap: .75rem;
+    flex-wrap: wrap;
+    padding: 1.2rem 1.5rem;
+    background: var(--dark2);
+    border-bottom: 1px solid var(--border);
+  }
+  .btn {
+    font-family: 'DM Sans', sans-serif;
+    font-size: .78rem;
+    font-weight: 600;
+    letter-spacing: .08em;
+    text-transform: uppercase;
+    border: none;
+    border-radius: 8px;
+    padding: .6rem 1.3rem;
+    cursor: pointer;
+    transition: transform .15s, opacity .15s;
+  }
+  .btn:hover { transform: translateY(-1px); opacity: .85; }
+  .btn-gold { background: var(--gold); color: #0e0e12; }
+  .btn-outline { background: transparent; border: 1px solid var(--border); color: var(--text); }
+  .btn-outline:hover { border-color: var(--gold); color: var(--gold); }
+
+  /* ── FILTER TABS ── */
+  .filter-tabs {
+    display: flex;
+    justify-content: center;
+    gap: .5rem;
+    flex-wrap: wrap;
+    padding: 1rem 1.5rem;
+    background: var(--dark);
+    border-bottom: 1px solid var(--border);
+  }
+  .tab {
+    font-family: 'DM Sans', sans-serif;
+    font-size: .72rem;
+    font-weight: 500;
+    letter-spacing: .06em;
+    text-transform: uppercase;
+    border: 1px solid var(--border);
+    background: transparent;
+    color: var(--muted);
+    padding: .38rem 1rem;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: all .15s;
+  }
+  .tab.active { border-color: var(--gold); color: var(--gold); background: rgba(201,168,76,.07); }
+  .tab:hover { color: var(--text); border-color: #4a4a5a; }
+
+  /* ── PROGRESS ── */
+  .progress-wrap {
+    padding: .8rem 1.5rem;
+    background: var(--dark);
+    border-bottom: 1px solid var(--border);
+  }
+  .progress-track {
+    height: 4px;
+    background: var(--dark3);
+    border-radius: 99px;
+    overflow: hidden;
+  }
+  .progress-fill {
+    height: 100%;
+    background: linear-gradient(90deg, var(--gold), var(--gold-light));
+    border-radius: 99px;
+    transition: width .4s ease;
+  }
+  .progress-label {
+    display: flex;
+    justify-content: space-between;
+    font-size: .72rem;
+    color: var(--muted);
+    margin-bottom: .4rem;
+  }
+
+  /* ── QUIZ CONTAINER ── */
+  .quiz-container {
+    max-width: 820px;
+    margin: 0 auto;
+    padding: 2rem 1.5rem 4rem;
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+  }
+
+  /* ── QUESTION CARD ── */
+  .question-card {
+    background: var(--dark2);
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    overflow: hidden;
+    transition: border-color .2s;
+    animation: fadeUp .35s ease both;
+  }
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(14px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+  .question-card.answered-correct { border-color: rgba(62,207,142,.4); }
+  .question-card.answered-wrong   { border-color: rgba(240,90,90,.4); }
+
+  .q-header {
+    display: flex;
+    align-items: center;
+    gap: .8rem;
+    padding: 1.1rem 1.4rem .8rem;
+    border-bottom: 1px solid var(--border);
+  }
+  .q-num {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.1rem;
+    font-weight: 700;
+    color: var(--gold);
+    min-width: 2rem;
+  }
+  .q-subject {
+    font-size: .65rem;
+    font-weight: 600;
+    letter-spacing: .1em;
+    text-transform: uppercase;
+    color: var(--muted);
+    border: 1px solid var(--border);
+    padding: .2rem .65rem;
+    border-radius: 99px;
+    margin-left: auto;
+  }
+
+  .q-text {
+    padding: 1.1rem 1.4rem 1rem;
+    font-size: .95rem;
+    line-height: 1.65;
+    font-weight: 400;
+    color: var(--text);
+  }
+
+  .options-list {
+    padding: .2rem 1.4rem 1.2rem;
+    display: flex;
+    flex-direction: column;
+    gap: .5rem;
+  }
+  .option-btn {
+    display: flex;
+    align-items: flex-start;
+    gap: .85rem;
+    background: var(--dark3);
+    border: 1px solid var(--border);
+    border-radius: 9px;
+    padding: .75rem 1rem;
+    cursor: pointer;
+    text-align: left;
+    font-family: 'DM Sans', sans-serif;
+    font-size: .88rem;
+    color: var(--text);
+    line-height: 1.5;
+    transition: all .15s;
+    width: 100%;
+  }
+  .option-btn:hover:not(:disabled) {
+    border-color: var(--gold);
+    background: rgba(201,168,76,.06);
+  }
+  .option-btn:disabled { cursor: default; }
+  .option-btn.correct  { border-color: var(--green); background: rgba(62,207,142,.08); color: var(--green); }
+  .option-btn.wrong    { border-color: var(--red);   background: rgba(240,90,90,.08);   color: var(--red); }
+  .option-btn.reveal   { border-color: var(--green); background: rgba(62,207,142,.05); color: var(--green); opacity: .7; }
+  .option-letter {
+    font-weight: 700;
+    font-size: .78rem;
+    letter-spacing: .06em;
+    min-width: 1.3rem;
+    padding-top: .05rem;
+    color: var(--muted);
+  }
+  .option-btn.correct .option-letter,
+  .option-btn.reveal  .option-letter { color: var(--green); }
+  .option-btn.wrong   .option-letter { color: var(--red); }
+
+  .explanation {
+    margin: 0 1.4rem 1.2rem;
+    padding: .85rem 1rem;
+    border-radius: 9px;
+    background: rgba(90,142,240,.07);
+    border-left: 3px solid var(--blue);
+    font-size: .83rem;
+    color: #a0b4e0;
+    line-height: 1.6;
+    display: none;
+  }
+  .explanation.show { display: block; animation: fadeUp .25s ease; }
+  .explanation strong { color: var(--blue); }
+
+  /* ── RESULT BANNER ── */
+  .result-banner {
+    display: none;
+    max-width: 820px;
+    margin: 0 auto;
+    padding: 0 1.5rem 3rem;
+  }
+  .result-banner.show { display: block; animation: fadeUp .4s ease; }
+  .result-card {
+    background: linear-gradient(135deg, #17171f, #1f1f2a);
+    border: 1px solid var(--gold);
+    border-radius: 16px;
+    padding: 2.5rem 2rem;
+    text-align: center;
+  }
+  .result-icon { font-size: 3rem; margin-bottom: 1rem; }
+  .result-card h2 {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.8rem;
+    color: var(--gold);
+    margin-bottom: .5rem;
+  }
+  .result-score {
+    font-size: 3.5rem;
+    font-weight: 700;
+    color: var(--text);
+    margin: .5rem 0;
+  }
+  .result-score span { color: var(--gold); }
+  .result-grade {
+    display: inline-block;
+    font-size: .8rem;
+    font-weight: 600;
+    letter-spacing: .14em;
+    text-transform: uppercase;
+    padding: .4rem 1.2rem;
+    border-radius: 99px;
+    margin-bottom: 1.5rem;
+  }
+  .grade-pass  { background: rgba(62,207,142,.15); color: var(--green); border: 1px solid rgba(62,207,142,.3); }
+  .grade-fail  { background: rgba(240,90,90,.15);  color: var(--red);   border: 1px solid rgba(240,90,90,.3); }
+
+  /* ── FOOTER ── */
+  footer {
+    text-align: center;
+    padding: 1.5rem;
+    font-size: .72rem;
+    color: var(--muted);
+    border-top: 1px solid var(--border);
+  }
+
+  /* ── HIDDEN ── */
+  .hidden { display: none !important; }
+
+  @media (max-width: 480px) {
+    .q-text { font-size: .88rem; }
+    .option-btn { font-size: .82rem; }
+    .stats-bar { gap: 1rem; }
+  }
+</style>
+</head>
+<body>
+
+<div class="hero">
+  <div class="hero-label">CPA Board Exam Review</div>
+  <h1>Gwyn's Training</h1>
+  <p>100-Item Comprehensive Reviewer · Certified Public Accountant</p>
+</div>
+
+<div class="stats-bar">
+  <div class="stat">Questions <span class="stat-val" id="total-stat">100</span></div>
+  <div class="stat" id="score-stat">Score <span class="stat-val" id="score-val">0</span></div>
+  <div class="stat">Answered <span class="stat-val" id="answered-val">0</span></div>
+  <div class="stat">Remaining <span class="stat-val" id="remaining-val">100</span></div>
+</div>
+
+<div class="controls">
+  <button class="btn btn-gold" onclick="submitAll()">Submit &amp; Score All</button>
+  <button class="btn btn-outline" onclick="resetQuiz()">Reset Quiz</button>
+  <button class="btn btn-outline" onclick="shuffleQuestions()">Shuffle Questions</button>
+</div>
+
+<div class="filter-tabs">
+  <button class="tab active" onclick="filterTab(this,'all')">All</button>
+  <button class="tab" onclick="filterTab(this,'FAR')">FAR</button>
+  <button class="tab" onclick="filterTab(this,'AUD')">Auditing</button>
+  <button class="tab" onclick="filterTab(this,'TAX')">Taxation</button>
+  <button class="tab" onclick="filterTab(this,'MGT')">Management</button>
+  <button class="tab" onclick="filterTab(this,'LAW')">Business Law</button>
+  <button class="tab" onclick="filterTab(this,'COST')">Cost Acctg</button>
+</div>
+
+<div class="progress-wrap">
+  <div class="progress-label">
+    <span>Progress</span>
+    <span id="pct-label">0%</span>
+  </div>
+  <div class="progress-track"><div class="progress-fill" id="progress-fill" style="width:0%"></div></div>
+</div>
+
+<div class="quiz-container" id="quiz-container"></div>
+
+<div class="result-banner" id="result-banner">
+  <div class="result-card">
+    <div class="result-icon" id="result-icon">🎓</div>
+    <h2>Exam Results</h2>
+    <div class="result-score"><span id="final-score">0</span> / 100</div>
+    <div class="result-grade" id="result-grade">—</div>
+    <p style="color:var(--muted);font-size:.9rem;" id="result-msg"></p>
+    <br>
+    <button class="btn btn-gold" onclick="resetQuiz()" style="margin-top:.5rem">Try Again</button>
+  </div>
+</div>
+
+<footer>Gwyn's Training · CPA Board Exam Reviewer · For educational purposes only</footer>
+
+<script>
+const QUESTIONS = [
+  // ── FINANCIAL ACCOUNTING & REPORTING (FAR) ──
+  { id:1,  subj:'FAR',  q:'Under PAS 1, which financial statement presents the financial position of an entity at a specific date?',
+    opts:['Income Statement','Statement of Financial Position','Statement of Cash Flows','Statement of Changes in Equity'],
+    ans:1, exp:'PAS 1 requires a Statement of Financial Position (balance sheet) that shows assets, liabilities, and equity at a specific reporting date.' },
+  { id:2,  subj:'FAR',  q:'Which inventory costing method assumes that the first items purchased are the first items sold?',
+    opts:['Weighted Average','LIFO','FIFO','Specific Identification'],
+    ans:2, exp:'FIFO (First-In, First-Out) assumes the oldest inventory is sold first, leaving the most recently purchased items in ending inventory.' },
+  { id:3,  subj:'FAR',  q:'Under the accrual basis of accounting, revenues are recognized when:',
+    opts:['Cash is received','Earned, regardless of cash receipt','The board approves','An invoice is issued'],
+    ans:1, exp:'Accrual accounting recognizes revenue when it is earned (goods delivered or services rendered), not when cash is actually received.' },
+  { id:4,  subj:'FAR',  q:'Goodwill arising from a business combination is:',
+    opts:['Amortized over 40 years','Amortized over 20 years','Tested annually for impairment','Expensed immediately'],
+    ans:2, exp:'Under PFRS 3, goodwill is not amortized but is instead tested for impairment at least annually or when indicators of impairment exist.' },
+  { id:5,  subj:'FAR',  q:'Which of the following is NOT a component of other comprehensive income (OCI)?',
+    opts:['Unrealized gains on FVOCI investments','Foreign currency translation adjustments','Net income from operations','Remeasurements of defined benefit plans'],
+    ans:2, exp:'Net income from operations is reported in the income statement, not in OCI. OCI includes items that bypass profit or loss per the applicable PFRS.' },
+  { id:6,  subj:'FAR',  q:'The double-declining balance method produces:',
+    opts:['Equal depreciation each period','Higher depreciation in early years','Higher depreciation in later years','Same total depreciation as straight-line over an asset\'s life'],
+    ans:1, exp:'The DDB method applies a constant rate to the declining book value, resulting in larger depreciation charges in earlier years.' },
+  { id:7,  subj:'FAR',  q:'Under PFRS 15, the core principle for revenue recognition is:',
+    opts:['Revenue is recognized when cash is collected','Recognize revenue to depict the transfer of promised goods or services in an amount that reflects the consideration the entity expects to receive','Revenue equals sales price times quantity','Revenue recognized only after warranty period expires'],
+    ans:1, exp:'PFRS 15\'s core principle is recognizing revenue in a manner that reflects the transfer of goods/services and the consideration the entity expects to be entitled to.' },
+  { id:8,  subj:'FAR',  q:'A contingent liability is recognized on the balance sheet when:',
+    opts:['It is possible and estimable','It is probable and estimable','It is remote','The lawsuit is filed'],
+    ans:1, exp:'Under PAS 37, a provision (contingent liability recognized as liability) is recorded only when an outflow is probable and the amount can be reliably estimated.' },
+  { id:9,  subj:'FAR',  q:'Bonds issued at a premium result in:',
+    opts:['Carrying value increasing over time','Effective interest expense less than cash interest','Effective interest expense greater than cash interest','No change in carrying value'],
+    ans:1, exp:'When bonds are issued at a premium, the coupon rate exceeds the effective rate. The premium is amortized, reducing carrying value and making effective interest less than cash paid.' },
+  { id:10, subj:'FAR',  q:'Which financial statement shows changes in equity during a period?',
+    opts:['Balance Sheet','Income Statement','Statement of Changes in Equity','Notes to Financial Statements'],
+    ans:2, exp:'The Statement of Changes in Equity presents movements in each component of equity such as share capital, retained earnings, and other reserves during the period.' },
+  { id:11, subj:'FAR',  q:'An impairment loss on property, plant and equipment is recognized when:',
+    opts:['Carrying amount exceeds recoverable amount','Recoverable amount exceeds carrying amount','Asset is fully depreciated','Asset is sold'],
+    ans:0, exp:'PAS 36 requires recognition of an impairment loss when the carrying amount of an asset exceeds its recoverable amount (higher of value in use and fair value less costs to sell).' },
+  { id:12, subj:'FAR',  q:'Which of the following is classified as a current asset?',
+    opts:['Land','Goodwill','Trade receivables expected to be collected within 12 months','Long-term investment in bonds'],
+    ans:2, exp:'Current assets include trade receivables expected to be converted to cash within the normal operating cycle or 12 months from the reporting date.' },
+  { id:13, subj:'FAR',  q:'The straight-line method of depreciation allocates cost:',
+    opts:['Based on usage','Equally over the useful life','More in early years','Based on revenue generated'],
+    ans:1, exp:'Under the straight-line method, an equal amount of depreciation is charged each period over the asset\'s estimated useful life.' },
+  { id:14, subj:'FAR',  q:'Research costs under PAS 38 are:',
+    opts:['Capitalized as intangible assets','Expensed as incurred','Capitalized if future benefits are probable','Deferred and amortized'],
+    ans:1, exp:'PAS 38 requires research costs to be expensed as incurred because, at the research stage, an entity cannot demonstrate that an intangible asset will be created.' },
+  { id:15, subj:'FAR',  q:'An entity uses the equity method when it holds:',
+    opts:['Less than 5% of shares','Significant influence (typically 20–50%)','Majority control (>50%)','100% ownership'],
+    ans:1, exp:'The equity method is used for investments where the investor has significant influence over the investee, generally presumed when 20–50% of voting shares are held (PAS 28).' },
+  { id:16, subj:'FAR',  q:'Deferred tax liabilities arise when:',
+    opts:['Tax base > carrying amount','Carrying amount > tax base for assets','Tax loss carryforwards exist','Prepaid taxes are recorded'],
+    ans:1, exp:'A deferred tax liability arises when the carrying amount of an asset exceeds its tax base, as the future taxable amounts will be higher when the asset is recovered.' },
+  { id:17, subj:'FAR',  q:'Under PFRS 16, lessees generally must:',
+    opts:['Expense all lease payments immediately','Recognize a right-of-use asset and lease liability','Only disclose the lease in notes','Capitalize only finance leases'],
+    ans:1, exp:'PFRS 16 requires lessees to recognize a right-of-use asset and corresponding lease liability for most leases, eliminating the old operating vs. finance lease distinction for lessees.' },
+  { id:18, subj:'FAR',  q:'The going concern assumption means:',
+    opts:['The entity will be profitable','The entity will continue operating for the foreseeable future','The entity has no debt','Financial statements are prepared at cost'],
+    ans:1, exp:'The going concern assumption presumes the entity will continue to operate for the foreseeable future and has no intention or necessity to liquidate or cease operations.' },
+  { id:19, subj:'FAR',  q:'Inventories are measured at:',
+    opts:['Cost only','Lower of cost and net realizable value','Market value','Replacement cost'],
+    ans:1, exp:'PAS 2 requires inventories to be measured at the lower of cost and net realizable value (NRV) to apply conservatism and prevent overstatement.' },
+  { id:20, subj:'FAR',  q:'The effective interest method amortizes bond discount/premium based on:',
+    opts:['Straight-line allocation','Carrying amount times the effective interest rate','Face amount times the coupon rate','Management discretion'],
+    ans:1, exp:'The effective interest method applies the market (effective) interest rate to the bond\'s carrying amount each period, producing a constant rate of return over the bond\'s life.' },
+
+  // ── AUDITING & ASSURANCE ──
+  { id:21, subj:'AUD',  q:'The primary responsibility for the financial statements rests with:',
+    opts:['The external auditor','Management of the entity','The board of directors','Regulatory authorities'],
+    ans:1, exp:'Management is responsible for the preparation and fair presentation of financial statements. The auditor\'s role is to express an independent opinion on those statements.' },
+  { id:22, subj:'AUD',  q:'An unmodified (clean) audit opinion means:',
+    opts:['The entity is profitable','Financial statements are prepared on a cash basis','Financial statements present fairly in all material respects','No errors were found'],
+    ans:2, exp:'An unmodified opinion indicates that the auditor concludes the financial statements present fairly, in all material respects, in accordance with the applicable financial reporting framework.' },
+  { id:23, subj:'AUD',  q:'Audit risk is the risk that:',
+    opts:['A material misstatement exists','The auditor issues an incorrect opinion on materially misstated statements','Internal controls fail','Management commits fraud'],
+    ans:1, exp:'Audit risk (AR) is the risk that the auditor expresses an inappropriate opinion when financial statements are materially misstated. AR = IR × CR × DR.' },
+  { id:24, subj:'AUD',  q:'Which of the following is an example of a substantive procedure?',
+    opts:['Walkthroughs of internal controls','Reperformance of bank reconciliation','Inspection of access logs','Inquiry of control owners'],
+    ans:1, exp:'Substantive procedures are designed to detect material misstatements. Reperforming the bank reconciliation tests the accuracy of the cash balance directly.' },
+  { id:25, subj:'AUD',  q:'Professional skepticism requires the auditor to:',
+    opts:['Assume management is dishonest','Accept all management representations','Critically assess audit evidence with a questioning mind','Skip procedures when management is cooperative'],
+    ans:2, exp:'Professional skepticism involves a questioning mind and critical assessment of evidence. It does not mean assuming dishonesty but being alert to conditions suggesting misstatement.' },
+  { id:26, subj:'AUD',  q:'A qualified opinion is issued when:',
+    opts:['Misstatements are pervasive','There is a material but not pervasive misstatement or scope limitation','The auditor cannot form an opinion','Going concern doubt exists'],
+    ans:1, exp:'A qualified opinion ("except for") is appropriate when there is a material but not pervasive misstatement or a limitation on the scope of audit that is material but not pervasive.' },
+  { id:27, subj:'AUD',  q:'Internal control is designed primarily to:',
+    opts:['Guarantee no fraud occurs','Provide reasonable assurance of achieving objectives','Eliminate all operational errors','Replace the external audit'],
+    ans:1, exp:'Internal controls provide reasonable—not absolute—assurance regarding the achievement of objectives related to operations, reporting, and compliance.' },
+  { id:28, subj:'AUD',  q:'The concept of materiality in auditing means:',
+    opts:['Any error is reported','Only errors above a threshold affecting decisions of users are considered significant','All discrepancies are equally important','Materiality is set by management'],
+    ans:1, exp:'Materiality is information whose omission or misstatement could influence economic decisions. Auditors set a threshold and focus on misstatements that exceed it.' },
+  { id:29, subj:'AUD',  q:'Which sampling method gives every item an equal chance of selection?',
+    opts:['Haphazard sampling','Judgmental sampling','Statistical random sampling','Systematic sampling with a random start'],
+    ans:2, exp:'Statistical random sampling uses probability theory to ensure every item in the population has a known and equal chance of selection, allowing objective evaluation of results.' },
+  { id:30, subj:'AUD',  q:'An adverse opinion is issued when financial statements:',
+    opts:['Contain a material but non-pervasive misstatement','Are fairly presented','Are pervasively misstated','Have a scope limitation'],
+    ans:2, exp:'An adverse opinion is the most severe modification, issued when misstatements are both material AND pervasive, meaning the statements do not present fairly.' },
+  { id:31, subj:'AUD',  q:'Analytical procedures used in the planning phase are intended to:',
+    opts:['Provide detailed audit evidence','Identify areas of potential risk','Replace substantive testing','Form the audit opinion'],
+    ans:1, exp:'During planning, analytical procedures help the auditor understand the entity and identify areas of significant risk that may require additional attention during the audit.' },
+  { id:32, subj:'AUD',  q:'A letter of representation from management is:',
+    opts:['Sufficient audit evidence on its own','Written confirmation of oral statements and acknowledgment of responsibility','Optional in all audits','Used to replace physical inspection'],
+    ans:1, exp:'Management representation letters confirm oral statements made during the audit and acknowledge management\'s responsibility for the financial statements. They are required but not sole evidence.' },
+  { id:33, subj:'AUD',  q:'The auditor\'s primary objective when auditing cash is to test for:',
+    opts:['Completeness only','Existence and completeness','Occurrence only','Valuation only'],
+    ans:1, exp:'For cash, auditors primarily test existence (that reported cash exists) and completeness (that all cash is included), typically through bank confirmations and reconciliations.' },
+  { id:34, subj:'AUD',  q:'Inherent risk is:',
+    opts:['The risk the auditor fails to detect misstatements','The susceptibility to misstatement absent controls','The risk internal controls fail','The risk of issuing the wrong opinion'],
+    ans:1, exp:'Inherent risk is the susceptibility of an assertion to a misstatement that could be material, assuming there are no related controls.' },
+  { id:35, subj:'AUD',  q:'An engagement letter should be obtained:',
+    opts:['After the audit report is issued','Before the commencement of audit work','Only for first-time engagements','When management requests it'],
+    ans:1, exp:'The engagement letter, which sets out the terms of the engagement, should be established before audit work begins to avoid misunderstandings regarding scope and responsibilities.' },
+
+  // ── TAXATION ──
+  { id:36, subj:'TAX',  q:'In the Philippines, the Bureau of Internal Revenue (BIR) is under:',
+    opts:['Office of the President','Department of Budget and Management','Department of Finance','Department of Trade and Industry'],
+    ans:2, exp:'The BIR is an attached agency of the Department of Finance (DOF), which is the primary government agency responsible for the sound revenues of the Philippines.' },
+  { id:37, subj:'TAX',  q:'The regular corporate income tax rate in the Philippines as of 2023 for domestic corporations is:',
+    opts:['20%','25%','30%','35%'],
+    ans:1, exp:'Under the Corporate Recovery and Tax Incentives for Enterprises (CREATE) Act, the regular corporate income tax rate for domestic corporations was reduced to 25% (20% for small corporations).' },
+  { id:38, subj:'TAX',  q:'Value Added Tax (VAT) in the Philippines is imposed at a rate of:',
+    opts:['5%','10%','12%','15%'],
+    ans:2, exp:'The standard VAT rate in the Philippines is 12% of the gross selling price or gross receipts, as imposed under the National Internal Revenue Code.' },
+  { id:39, subj:'TAX',  q:'Which of the following is generally exempt from VAT in the Philippines?',
+    opts:['Sale of commercial real property','Sale of agricultural food products in their original state','Importation of luxury goods','Provision of professional services'],
+    ans:1, exp:'Under the NIRC, the sale of agricultural food products in their original state is exempt from VAT as a measure to keep essential food products affordable.' },
+  { id:40, subj:'TAX',  q:'A Filipino citizen working abroad whose income is solely from foreign sources is classified as:',
+    opts:['Resident citizen','Non-resident citizen','Overseas contract worker','Resident alien'],
+    ans:1, exp:'A non-resident citizen is one who works abroad and derives income solely from foreign sources. Only their Philippine-sourced income (if any) is subject to Philippine income tax.' },
+  { id:41, subj:'TAX',  q:'The prescriptive period for BIR to assess income taxes is ordinarily:',
+    opts:['2 years from filing','3 years from filing or due date, whichever is later','5 years','10 years for fraud'],
+    ans:1, exp:'Under Section 203 of the NIRC, the BIR generally has 3 years from the last day for filing (or actual filing if later) to assess internal revenue taxes.' },
+  { id:42, subj:'TAX',  q:'Fringe benefits provided to rank-and-file employees are:',
+    opts:['Subject to fringe benefit tax','Included in the employee\'s gross compensation income','Exempt from all taxes','Deductible by the employer but tax-free for employee'],
+    ans:1, exp:'Fringe benefits given to rank-and-file employees are treated as part of their gross compensation income and subject to regular withholding tax, unlike benefits for supervisory/managerial employees.' },
+  { id:43, subj:'TAX',  q:'Minimum Corporate Income Tax (MCIT) is imposed at what rate on gross income?',
+    opts:['1%','2%','5%','10%'],
+    ans:1, exp:'MCIT is imposed at 2% of gross income (temporarily reduced under CREATE Act). It applies when MCIT exceeds the regular corporate income tax.' },
+  { id:44, subj:'TAX',  q:'Which of the following is a creditable withholding tax?',
+    opts:['Final tax on interest income from bank deposits','Withholding tax on compensation','Tax withheld on professional fees subject to EWT','VAT withheld by government'],
+    ans:2, exp:'Expanded withholding taxes (EWT) on professional fees are creditable against the payee\'s income tax liability, unlike final taxes which fully settle the tax obligation.' },
+  { id:45, subj:'TAX',  q:'Donor\'s tax in the Philippines is based on:',
+    opts:['Fair market value of the property given','Book value of the property','Cost of acquisition','Selling price'],
+    ans:0, exp:'Donor\'s tax is computed on the fair market value of the gift/donation at the time of donation. The rate is 6% of the total net gifts exceeding PHP 250,000 per year.' },
+  { id:46, subj:'TAX',  q:'Estate tax in the Philippines is imposed at a flat rate of:',
+    opts:['5%','6%','10%','20%'],
+    ans:1, exp:'Under the TRAIN Law, the estate tax rate was simplified to a flat 6% of the net taxable estate (after deductions), making compliance simpler.' },
+  { id:47, subj:'TAX',  q:'A corporation\'s taxable income is its:',
+    opts:['Gross revenues','Gross income minus allowable deductions','Total assets minus liabilities','Net revenues only'],
+    ans:1, exp:'Corporate taxable income is gross income (revenues minus cost of sales/services) less allowable deductions such as business expenses, depreciation, and others under the NIRC.' },
+  { id:48, subj:'TAX',  q:'Which taxpayer is taxed on worldwide income?',
+    opts:['Non-resident alien','Resident alien','Resident citizen','Non-resident citizen'],
+    ans:2, exp:'A resident citizen of the Philippines is taxed on their income from all sources worldwide, both within and outside the Philippines.' },
+  { id:49, subj:'TAX',  q:'The Percentage Tax on gross receipts of domestic common carriers is:',
+    opts:['1%','2%','3%','5%'],
+    ans:2, exp:'Domestic carriers (land transportation) and keepers of garages are subject to a 3% percentage tax on their gross receipts under Section 117 of the NIRC.' },
+  { id:50, subj:'TAX',  q:'Under TRAIN Law, the individual income tax for annual taxable income exceeding PHP 8,000,000 is:',
+    opts:['30%','32%','35%','25%'],
+    ans:2, exp:'The TRAIN Law\'s revised individual income tax table imposes a top marginal rate of 35% on annual taxable income exceeding PHP 8,000,000.' },
+
+  // ── MANAGEMENT ADVISORY SERVICES ──
+  { id:51, subj:'MGT',  q:'Break-even point in units is calculated as:',
+    opts:['Fixed costs ÷ selling price per unit','Fixed costs ÷ contribution margin per unit','Total costs ÷ units sold','Variable costs ÷ units sold'],
+    ans:1, exp:'Break-even in units = Fixed Costs ÷ Contribution Margin per Unit (selling price minus variable cost per unit).' },
+  { id:52, subj:'MGT',  q:'The margin of safety measures:',
+    opts:['Actual sales minus fixed costs','Amount by which actual or budgeted sales exceeds break-even sales','Contribution margin ratio','Operating profit divided by sales'],
+    ans:1, exp:'Margin of safety = Actual (or Budgeted) Sales − Break-even Sales. It indicates how much sales can decline before the entity incurs a loss.' },
+  { id:53, subj:'MGT',  q:'In capital budgeting, Net Present Value (NPV) rule states:',
+    opts:['Accept if NPV < 0','Accept if NPV > 0','Accept if NPV = 1','Accept if IRR < cost of capital'],
+    ans:1, exp:'A positive NPV means the project generates more value than its cost of capital, adding value to the firm. Projects with NPV > 0 should be accepted.' },
+  { id:54, subj:'MGT',  q:'The Internal Rate of Return (IRR) is the discount rate that:',
+    opts:['Maximizes NPV','Makes NPV equal to zero','Equals the cost of equity','Equals the payback period'],
+    ans:1, exp:'IRR is the rate at which the present value of future cash inflows equals the initial investment, resulting in NPV = 0.' },
+  { id:55, subj:'MGT',  q:'Standard costing variance: when actual cost > standard cost, the variance is:',
+    opts:['Favorable','Adverse/Unfavorable','Zero','Irrelevant'],
+    ans:1, exp:'When actual cost exceeds standard (expected) cost, the variance is unfavorable (adverse) because the entity spent more than planned.' },
+  { id:56, subj:'MGT',  q:'A flexible budget adjusts for:',
+    opts:['Changes in fixed costs','Changes in the level of activity','Changes in management','Prior period errors'],
+    ans:1, exp:'A flexible budget recalculates expected costs based on the actual level of activity, providing a more relevant benchmark for performance evaluation.' },
+  { id:57, subj:'MGT',  q:'Economic Order Quantity (EOQ) minimizes:',
+    opts:['Total inventory costs (ordering + carrying)','Ordering costs only','Carrying costs only','Purchase price'],
+    ans:0, exp:'EOQ is the order quantity that minimizes total inventory costs, which is the sum of ordering costs and holding (carrying) costs.' },
+  { id:58, subj:'MGT',  q:'Transfer pricing refers to:',
+    opts:['Prices charged between related divisions or companies','Tax rates for international transactions','Market prices in auctions','Foreign exchange rates'],
+    ans:0, exp:'Transfer pricing is the setting of prices for transactions between related entities (e.g., divisions or subsidiaries) within the same corporate group.' },
+  { id:59, subj:'MGT',  q:'The Balanced Scorecard includes which four perspectives?',
+    opts:['Revenue, Cost, Risk, Quality','Financial, Customer, Internal Process, Learning & Growth','Budget, Actual, Variance, Trend','Sales, Marketing, Operations, HR'],
+    ans:1, exp:'Kaplan and Norton\'s Balanced Scorecard includes: Financial, Customer, Internal Business Process, and Learning & Growth perspectives.' },
+  { id:60, subj:'MGT',  q:'Return on Investment (ROI) is calculated as:',
+    opts:['Net income ÷ total assets','Net income ÷ equity','EBIT ÷ sales','Gross profit ÷ revenue'],
+    ans:0, exp:'ROI = Net Income ÷ Total Assets (or Investment). It measures how efficiently assets are used to generate profit.' },
+  { id:61, subj:'MGT',  q:'Which of the following is a sunk cost?',
+    opts:['Future maintenance expenses','Cost of equipment already purchased and cannot be recovered','Incremental revenue from new product','Opportunity cost of capital'],
+    ans:1, exp:'A sunk cost is a cost already incurred that cannot be recovered. It is irrelevant to future decisions because it cannot be changed regardless of the decision made.' },
+  { id:62, subj:'MGT',  q:'Contribution margin ratio is:',
+    opts:['Net income ÷ sales','(Sales − Variable costs) ÷ Sales','Fixed costs ÷ Sales','Gross profit ÷ Cost of sales'],
+    ans:1, exp:'CM Ratio = Contribution Margin ÷ Sales = (Sales − Variable Costs) ÷ Sales. It shows the percentage of each sales peso that contributes to covering fixed costs.' },
+  { id:63, subj:'MGT',  q:'Activity-Based Costing (ABC) assigns overhead based on:',
+    opts:['Direct labor hours only','Machine hours only','Cost drivers associated with specific activities','Sales volume'],
+    ans:2, exp:'ABC allocates overhead costs using multiple cost drivers that better reflect the actual consumption of resources by each product or service activity.' },
+  { id:64, subj:'MGT',  q:'The payback period method:',
+    opts:['Considers time value of money','Measures how quickly an investment is recovered','Is the most comprehensive capital budgeting method','Always accepts long-term projects'],
+    ans:1, exp:'The payback period is the time required to recover the initial investment from net cash flows. Its main weakness is that it ignores time value of money and cash flows beyond payback.' },
+  { id:65, subj:'MGT',  q:'Just-in-Time (JIT) inventory aims to:',
+    opts:['Maximize safety stock','Produce and deliver goods only when needed','Increase warehouse space','Maintain high reorder points'],
+    ans:1, exp:'JIT is a production strategy that reduces inventory holding costs by receiving/producing goods only when demanded, eliminating waste and minimizing storage.' },
+
+  // ── BUSINESS LAW & TAXATION ──
+  { id:66, subj:'LAW',  q:'A contract requires which of the following essential elements?',
+    opts:['Offer, consideration, and notarization','Consent, object, and cause/consideration','Written form, witnesses, and signature','Consideration and registration'],
+    ans:1, exp:'Under the Civil Code of the Philippines, a valid contract requires: (1) consent of the contracting parties, (2) object certain, and (3) cause of the obligation (consideration).' },
+  { id:67, subj:'LAW',  q:'A corporation acquires juridical personality upon:',
+    opts:['Filing of Articles of Incorporation','Issuance of Certificate of Incorporation by the SEC','Holding its first meeting','Subscribing to shares'],
+    ans:1, exp:'Under the Revised Corporation Code, a corporation acquires its juridical personality only upon the issuance of the Certificate of Incorporation by the SEC.' },
+  { id:68, subj:'LAW',  q:'The nationality rule under the Philippine Constitution for exploitation of natural resources requires:',
+    opts:['60% Filipino ownership','At least 60% Filipino, 40% foreign','100% Filipino','50% Filipino'],
+    ans:1, exp:'The Philippine Constitution (Art. XII) requires that corporations exploiting natural resources must be at least 60% Filipino-owned to safeguard national patrimony.' },
+  { id:69, subj:'LAW',  q:'A negotiable instrument is:',
+    opts:['Any written document signed by a party','An unconditional written promise or order to pay a certain sum of money','An oral promise to pay','A contract for services'],
+    ans:1, exp:'Under the Negotiable Instruments Law, a negotiable instrument must be an unconditional, written promise or order to pay a fixed sum of money, payable on demand or at a definite time.' },
+  { id:70, subj:'LAW',  q:'The doctrine of piercing the corporate veil allows courts to:',
+    opts:['Dissolve corporations automatically','Hold shareholders personally liable when the corporate fiction is used for fraud','Increase the share capital','Remove the board of directors'],
+    ans:1, exp:'Courts may disregard the separate corporate personality (pierce the veil) when the corporation is used as a shield to perpetrate fraud, evade obligations, or justify wrong.' },
+  { id:71, subj:'LAW',  q:'Under the Labor Code, overtime work entitles an employee to an additional:',
+    opts:['10% of regular rate','25% of regular hourly rate','50% of regular hourly rate','Regular rate only'],
+    ans:1, exp:'Article 87 of the Labor Code provides that overtime work shall be paid an additional compensation equivalent to at least 25% of the regular hourly rate on ordinary days.' },
+  { id:72, subj:'LAW',  q:'The Securities Regulation Code defines a "securities" as:',
+    opts:['Only shares of stock','Shares, bonds, debentures, notes, and other investment contracts','Bank deposits and certificates','Foreign currencies'],
+    ans:1, exp:'The SRC broadly defines securities to include shares, bonds, debentures, notes, evidences of indebtedness, and investment contracts, requiring proper registration or exemption.' },
+  { id:73, subj:'LAW',  q:'A sole proprietorship\'s liability is:',
+    opts:['Limited to capital contribution','Unlimited – the owner is personally liable','Shared with partners','Limited to assets of the business'],
+    ans:1, exp:'In a sole proprietorship, the owner has unlimited personal liability, meaning creditors can pursue the owner\'s personal assets beyond the business assets.' },
+  { id:74, subj:'LAW',  q:'The Anti-Money Laundering Act (AMLA) requires covered institutions to report:',
+    opts:['Any transaction above PHP 100,000','Covered and suspicious transactions','Only foreign transactions','Transactions involving government officials only'],
+    ans:1, exp:'AMLA requires covered institutions to report both covered transactions (single transactions exceeding PHP 500,000) and suspicious transactions regardless of amount.' },
+  { id:75, subj:'LAW',  q:'A partnership is dissolved by:',
+    opts:['Death of a partner','Retirement of a partner','Mutual agreement of all partners','Any of the above'],
+    ans:3, exp:'Under the Civil Code, a partnership may be dissolved by the death or incapacity of a partner, mutual agreement, court decree, or completion of the undertaking, among other causes.' },
+
+  // ── COST ACCOUNTING ──
+  { id:76, subj:'COST', q:'In process costing, equivalent units represent:',
+    opts:['Completed units only','The expression of incomplete units in terms of fully completed units','Units in beginning inventory','Defective units produced'],
+    ans:1, exp:'Equivalent units convert partially completed units into a comparable measure of fully completed units, allowing cost per unit to be calculated in process costing.' },
+  { id:77, subj:'COST', q:'Job order costing is appropriate when:',
+    opts:['Products are identical and produced continuously','Each job or batch has unique characteristics','All products use the same process','Production is highly automated'],
+    ans:1, exp:'Job order costing accumulates costs for each individual job or batch, making it suitable for unique, custom orders (e.g., construction, printing, custom manufacturing).' },
+  { id:78, subj:'COST', q:'Normal spoilage in manufacturing is treated as:',
+    opts:['A period cost expensed immediately','Part of the cost of good units produced','Extraordinary loss','Administrative overhead'],
+    ans:1, exp:'Normal spoilage is an inherent part of the production process and its cost is absorbed into the cost of good units (product cost), not charged as a period expense.' },
+  { id:79, subj:'COST', q:'The predetermined overhead rate is calculated as:',
+    opts:['Actual overhead ÷ Actual activity','Budgeted overhead ÷ Budgeted activity level','Actual overhead ÷ Budgeted activity','Standard overhead ÷ Actual activity'],
+    ans:1, exp:'The predetermined overhead rate = Estimated (Budgeted) Overhead ÷ Estimated (Budgeted) Activity Base, set at the beginning of the period for product costing purposes.' },
+  { id:80, subj:'COST', q:'Under absorption costing, fixed manufacturing overhead is:',
+    opts:['Expensed in the period incurred','Included in product cost and deferred in inventory','Never charged to any product','Treated as a period cost'],
+    ans:1, exp:'Absorption costing treats all manufacturing costs (fixed and variable overhead) as product costs, so fixed overhead is capitalized in inventory and expensed when goods are sold.' },
+  { id:81, subj:'COST', q:'Variable costing differs from absorption costing in that:',
+    opts:['Direct materials are excluded','Fixed manufacturing overhead is a period cost','Selling expenses are capitalized','Direct labor is excluded'],
+    ans:1, exp:'Under variable costing, fixed manufacturing overhead is treated as a period cost (expensed in full), not included in product cost—the key difference from absorption costing.' },
+  { id:82, subj:'COST', q:'The formula for cost of goods manufactured is:',
+    opts:['Beginning FG + Purchases − Ending FG','Beginning WIP + Manufacturing costs − Ending WIP','Net sales − Gross profit','Total manufacturing costs only'],
+    ans:1, exp:'Cost of Goods Manufactured = Beginning WIP Inventory + Total Manufacturing Costs (DM + DL + MOH) − Ending WIP Inventory.' },
+  { id:83, subj:'COST', q:'A cost driver is:',
+    opts:['Total fixed costs','A factor that causes changes in cost','The selling price per unit','Net profit per unit'],
+    ans:1, exp:'A cost driver is any factor whose change causes a change in the total cost of a related cost object. In ABC, cost drivers are used to allocate overhead to products.' },
+  { id:84, subj:'COST', q:'Service department costs are allocated to production departments using:',
+    opts:['Arbitrary amounts','Allocation bases that reflect the service used (e.g., direct, step-down, or reciprocal methods)','Sales revenue','Number of employees only'],
+    ans:1, exp:'Service department costs are allocated using appropriate methods: direct method, step-down (sequential) method, or reciprocal method, based on usage or benefit received.' },
+  { id:85, subj:'COST', q:'Joint product costs are costs incurred:',
+    opts:['After the split-off point','Before the split-off point that are shared by all products','Only for the main product','Only for by-products'],
+    ans:1, exp:'Joint costs are common costs incurred before the split-off point where two or more products (joint products) become separately identifiable.' },
+
+  // ── ADDITIONAL MIXED QUESTIONS ──
+  { id:86, subj:'FAR',  q:'Under PAS 7, cash equivalents are:',
+    opts:['Any liquid asset','Short-term, highly liquid investments readily convertible to known amounts of cash with insignificant risk','Treasury bonds with 6-month maturity','Bank overdrafts'],
+    ans:1, exp:'PAS 7 defines cash equivalents as short-term, highly liquid investments convertible to known amounts of cash, with an original maturity of 3 months or less.' },
+  { id:87, subj:'AUD',  q:'Peer review in the public accounting profession is primarily intended to:',
+    opts:['Increase billings','Assess whether a firm\'s quality control system meets professional standards','Replace the external audit','Evaluate client satisfaction'],
+    ans:1, exp:'Peer review (quality control review) evaluates whether a firm\'s system of quality control meets applicable standards and whether the firm complies with those standards in practice.' },
+  { id:88, subj:'TAX',  q:'The optional standard deduction for individual taxpayers in the Philippines is:',
+    opts:['30% of gross income','40% of gross income','20% of gross sales','50% of gross receipts'],
+    ans:1, exp:'Individual taxpayers (and corporations) may claim an optional standard deduction (OSD) of 40% of gross sales or gross receipts in lieu of itemized deductions.' },
+  { id:89, subj:'MGT',  q:'The cost of capital is used as a:',
+    opts:['Sales price benchmark','Discount rate to evaluate investments and minimum required return','Tax base','Inventory valuation rate'],
+    ans:1, exp:'The cost of capital is the minimum required rate of return on investments. It serves as the discount rate in NPV analysis and the hurdle rate for IRR comparisons.' },
+  { id:90, subj:'LAW',  q:'Under the Philippine Data Privacy Act (RA 10173), personal information controllers must:',
+    opts:['Disclose all data to the public','Implement reasonable security measures and be accountable for data under their control','Share data freely between agencies','Store data only outside the Philippines'],
+    ans:1, exp:'The Data Privacy Act requires personal information controllers to implement reasonable security measures, observe data minimization, and be accountable for personal data in their custody.' },
+  { id:91, subj:'FAR',  q:'The current ratio is calculated as:',
+    opts:['Total assets ÷ total liabilities','Current assets ÷ current liabilities','Net income ÷ current assets','Current liabilities ÷ current assets'],
+    ans:1, exp:'The current ratio = Current Assets ÷ Current Liabilities. It measures the entity\'s ability to pay short-term obligations using short-term assets.' },
+  { id:92, subj:'AUD',  q:'Confirmation of accounts receivable is used to test:',
+    opts:['Completeness of sales','Existence and accuracy of receivables','Valuation of inventory','Classification of payables'],
+    ans:1, exp:'External confirmation of accounts receivable from customers directly tests the existence (the balance actually exists) and accuracy (correct amount) of the receivable balance.' },
+  { id:93, subj:'COST', q:'The difference between a budget and a standard is:',
+    opts:['Budgets are for income; standards are for costs','A budget is a total amount for a period; a standard is a per-unit amount','They are identical','Standards apply only to labor'],
+    ans:1, exp:'A budget is a total plan for a cost or revenue for a period; a standard is the expected unit cost or quantity for a single unit of product or service.' },
+  { id:94, subj:'MGT',  q:'Relevant costs for decision making are:',
+    opts:['Historical costs','Future costs that differ between alternatives','Sunk costs','Average fixed costs'],
+    ans:1, exp:'Relevant costs are future costs that will differ between decision alternatives. Sunk costs and future costs that are the same for all alternatives are irrelevant.' },
+  { id:95, subj:'TAX',  q:'Percentage Tax is a type of:',
+    opts:['Income tax','Business tax imposed on non-VAT entities or specific industries','Property tax','Excise tax'],
+    ans:1, exp:'Percentage Tax is a business tax levied on certain entities not subject to VAT (those with annual gross sales below the VAT threshold) and on specific businesses like common carriers.' },
+  { id:96, subj:'FAR',  q:'Which of the following is a non-cash investing activity?',
+    opts:['Purchase of equipment with cash','Acquisition of land by issuing shares','Sale of machinery for cash','Payment of dividends'],
+    ans:1, exp:'Acquiring an asset by issuing shares involves no cash flow. Under PAS 7, significant non-cash transactions must be disclosed separately in the notes or supplemental schedule.' },
+  { id:97, subj:'LAW',  q:'The Statute of Frauds requires certain contracts to be:',
+    opts:['Notarized before a notary public','In writing and signed by the party to be charged','Approved by the court','Witnessed by two individuals'],
+    ans:1, exp:'The Statute of Frauds (Art. 1403, Civil Code) requires specific contracts (e.g., sale of real property, contracts not to be performed within a year) to be in writing to be enforceable.' },
+  { id:98, subj:'AUD',  q:'Independence in auditing means the auditor:',
+    opts:['Has no knowledge of the client\'s industry','Is not subject to the influence or control of the client','Never communicates with management','Charges fixed fees only'],
+    ans:1, exp:'Auditor independence (in fact and in appearance) means the auditor is free from any influence, interest, or relationship that could impair professional judgment regarding the client.' },
+  { id:99, subj:'COST', q:'Over-applied manufacturing overhead occurs when:',
+    opts:['Applied overhead < actual overhead','Applied overhead > actual overhead','Applied equals actual overhead','No overhead is applied'],
+    ans:1, exp:'Over-applied overhead means the firm applied more overhead to products than was actually incurred. It results in a credit balance in the Manufacturing Overhead account.' },
+  { id:100,subj:'FAR',  q:'Under PFRS for SMEs, financial statements are required to include at minimum:',
+    opts:['Only a balance sheet','Statement of financial position, comprehensive income, changes in equity, cash flows, and notes','Income statement and cash flows only','Balance sheet and notes only'],
+    ans:1, exp:'PFRS for SMEs requires: statement of financial position, statement of comprehensive income, statement of changes in equity, statement of cash flows, and notes.' },
+];
+
+let userAnswers = {};
+let currentFilter = 'all';
+let displayOrder = QUESTIONS.map((_,i)=>i);
+
+function getFiltered() {
+  return displayOrder
+    .map(i => QUESTIONS[i])
+    .filter(q => currentFilter === 'all' || q.subj === currentFilter);
+}
+
+function renderQuiz() {
+  const container = document.getElementById('quiz-container');
+  const filtered = getFiltered();
+  container.innerHTML = '';
+  filtered.forEach((q, idx) => {
+    const card = document.createElement('div');
+    card.className = 'question-card';
+    card.id = 'card-' + q.id;
+    const answered = userAnswers[q.id] !== undefined;
+    if (answered) {
+      card.classList.add(userAnswers[q.id] === q.ans ? 'answered-correct' : 'answered-wrong');
+    }
+
+    const letters = ['A','B','C','D'];
+    let optionsHTML = q.opts.map((opt,oi) => {
+      let cls = 'option-btn';
+      if (answered) {
+        if (oi === q.ans) cls += ' reveal';
+        if (oi === userAnswers[q.id] && oi !== q.ans) cls += ' wrong';
+        if (oi === userAnswers[q.id] && oi === q.ans) cls = 'option-btn correct';
+      }
+      return `<button class="${cls}" ${answered ? 'disabled' : ''} onclick="selectAnswer(${q.id}, ${oi})">
+        <span class="option-letter">${letters[oi]}</span>
+        <span>${opt}</span>
+      </button>`;
+    }).join('');
+
+    card.innerHTML = `
+      <div class="q-header">
+        <div class="q-num">${idx + 1}</div>
+        <div style="flex:1;font-size:.82rem;color:var(--muted);line-height:1.4;">&nbsp;</div>
+        <div class="q-subject">${q.subj}</div>
+      </div>
+      <div class="q-text">${q.q}</div>
+      <div class="options-list">${optionsHTML}</div>
+      <div class="explanation ${answered ? 'show' : ''}" id="exp-${q.id}">
+        <strong>Explanation:</strong> ${q.exp}
+      </div>`;
+    container.appendChild(card);
+  });
+  updateStats();
+}
+
+function selectAnswer(qid, chosenIdx) {
+  if (userAnswers[qid] !== undefined) return;
+  userAnswers[qid] = chosenIdx;
+  const q = QUESTIONS.find(x => x.id === qid);
+  const card = document.getElementById('card-' + qid);
+  const btns = card.querySelectorAll('.option-btn');
+  btns.forEach((b,i) => {
+    b.disabled = true;
+    if (i === q.ans) b.className = 'option-btn reveal';
+    if (i === chosenIdx && chosenIdx !== q.ans) b.className = 'option-btn wrong';
+    if (i === chosenIdx && chosenIdx === q.ans) b.className = 'option-btn correct';
+  });
+  card.classList.add(chosenIdx === q.ans ? 'answered-correct' : 'answered-wrong');
+  document.getElementById('exp-' + qid).classList.add('show');
+  updateStats();
+}
+
+function updateStats() {
+  const total = QUESTIONS.length;
+  const answered = Object.keys(userAnswers).length;
+  const correct = Object.entries(userAnswers).filter(([id,ch]) => {
+    const q = QUESTIONS.find(x => x.id == id);
+    return q && ch === q.ans;
+  }).length;
+  document.getElementById('score-val').textContent = correct;
+  document.getElementById('answered-val').textContent = answered;
+  document.getElementById('remaining-val').textContent = total - answered;
+  const pct = Math.round((answered / total) * 100);
+  document.getElementById('progress-fill').style.width = pct + '%';
+  document.getElementById('pct-label').textContent = pct + '%';
+}
+
+function submitAll() {
+  const unanswered = QUESTIONS.filter(q => userAnswers[q.id] === undefined);
+  if (unanswered.length > 0) {
+    const msg = unanswered.length === 1
+      ? 'You have 1 unanswered question. Submit anyway?'
+      : `You have ${unanswered.length} unanswered questions. Submit anyway?`;
+    if (!confirm(msg)) return;
+  }
+  const correct = Object.entries(userAnswers).filter(([id,ch]) => {
+    const q = QUESTIONS.find(x => x.id == id);
+    return q && ch === q.ans;
+  }).length;
+  const total = QUESTIONS.length;
+  const pct = Math.round((correct / total) * 100);
+  document.getElementById('final-score').textContent = correct;
+  const gradeEl = document.getElementById('result-grade');
+  const iconEl  = document.getElementById('result-icon');
+  const msgEl   = document.getElementById('result-msg');
+  if (pct >= 75) {
+    gradeEl.className = 'result-grade grade-pass';
+    gradeEl.textContent = 'PASSED · ' + pct + '%';
+    iconEl.textContent = '🏆';
+    msgEl.textContent = 'Congratulations! You met the passing standard. Keep it up, future CPA!';
+  } else {
+    gradeEl.className = 'result-grade grade-fail';
+    gradeEl.textContent = 'NEEDS IMPROVEMENT · ' + pct + '%';
+    iconEl.textContent = '📚';
+    msgEl.textContent = 'You didn\'t reach 75% this time. Review the topics and try again — you\'ve got this!';
+  }
+  document.getElementById('result-banner').classList.add('show');
+  document.getElementById('result-banner').scrollIntoView({ behavior: 'smooth' });
+}
+
+function resetQuiz() {
+  userAnswers = {};
+  document.getElementById('result-banner').classList.remove('show');
+  renderQuiz();
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+function shuffleQuestions() {
+  for (let i = displayOrder.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [displayOrder[i], displayOrder[j]] = [displayOrder[j], displayOrder[i]];
+  }
+  renderQuiz();
+}
+
+function filterTab(el, subj) {
+  document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+  el.classList.add('active');
+  currentFilter = subj;
+  renderQuiz();
+}
+
+renderQuiz();
+</script>
+</body>
+</html>
